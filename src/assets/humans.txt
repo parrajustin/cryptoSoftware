@@ -1,0 +1,25 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+  Chef:Justin Parra
+  website:parrajust.in
+	Contact:jp072h [at] us.att.com
+	From:El Paso, Texas, United States of America
+
+# THANKS
+
+  Raul Gomez -- rg9907
+
+# SITE
+
+  Last update:09/13/17
+	Language:English
+	Doctype:HTML5
+	IDE:Visual Studio Code, Jetbrains Webstorm, GIT, GIMP
+
+# TECHNOLOGY COLOPHON
+
+  HTML5, CSS3
+  Angular2, TypeScript, Webpack
