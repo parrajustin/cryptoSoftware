@@ -1,3 +1,13 @@
-<div>
-  Hello!
-</div>
+<md-sidenav-container #master>
+  <md-sidenav #sidenav [mode]="modeSet" class="md-sidenav-left md-whiteframe-z2" [opened]="openedSet">
+    TEST
+  </md-sidenav>
+
+  <main>
+    <div class="main-container" #mainContainer>
+      <div class="scroll-container-app">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </main>
+</md-sidenav-container>

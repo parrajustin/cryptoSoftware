@@ -22,7 +22,6 @@ import * as model from './model';
 import { DataTypes } from './model';
 import * as fromRoot from './reducers';
 import { ApiController, handleSub } from './services';
-import { NoContentComponent } from './components/no-content';
 
 /*
  * Angular 2 decorators and services
