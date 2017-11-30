@@ -30,24 +30,12 @@ import { CookieModule } from 'ngx-cookie';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { ROUTES } from './app.routes';
-import { FilterDialogComponent } from './components/filterDialog';
-import { HeaderDialogComponent } from './components/headerDialog';
-import { ListComponent } from './components/home';
-import { MapComponent } from './components/map';
-import { MyComponent } from './components/my';
-import { NoContentComponent } from './components/no-content';
-import { ScrollModule } from './components/scrollWrapper';
-import { UserComponent } from './components/user';
 import { ENV_PROVIDERS } from './environment';
-import { GetDataHeaders, GetDataPipeModule, GetSearch, GetValidHeaders, InCart } from './pipes';
-import { reducer } from './reducers';
-import { ApiController, HeaderService } from './services';
+import { NoContentComponent } from './components/no-content';
 
 // Application wide providers
 const APP_PROVIDERS = [
-  ...APP_RESOLVER_PROVIDERS,
-  ApiController,
-  HeaderService
+  ...APP_RESOLVER_PROVIDERS
 ];
 
 /**
@@ -57,21 +45,9 @@ const APP_PROVIDERS = [
   bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    ListComponent,
-    MapComponent,
-    NoContentComponent,
-    GetDataHeaders,
-    InCart,
-    MyComponent,
-    FilterDialogComponent,
-    HeaderDialogComponent,
-    UserComponent,
-    GetSearch,
-    GetValidHeaders
+    NoContentComponent
   ],
   entryComponents: [
-    FilterDialogComponent,
-    HeaderDialogComponent
   ],
   imports: [ // import Angular's modules
     FlexLayoutModule,
@@ -90,8 +66,6 @@ const APP_PROVIDERS = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    ScrollModule,
-    GetDataPipeModule,
     CookieModule.forRoot({ path: 'sbc.com' }),
     /**
      * TODO: Change api key to one provided by AT&T
@@ -100,8 +74,7 @@ const APP_PROVIDERS = [
       apiKey: 'AIzaSyDoaxElYk3lLbsH7PeOAiriTBR1pQfGEQM'
     }),
     AgmSnazzyInfoWindowModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
-    StoreModule.provideStore(reducer),
+    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
