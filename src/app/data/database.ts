@@ -1,4 +1,4 @@
-export class SurveyManager {
+export class Database {
 
     public publicVar: number = 0;
     public otherVar: string = "hi";
@@ -12,7 +12,7 @@ export class SurveyManager {
     }
 }
 
-export class Survey {
+export class DatabaseManager {
 
     public publicVar: number = 0;
     public otherVar: string = "hi";
