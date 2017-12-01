@@ -1,6 +1,6 @@
 
 // new update
-export class justinSucks {
+export class justinSucks2323 {
 
   public publicVar: number = 0;
   public otherVar: string = "hi";
@@ -10,6 +10,6 @@ export class justinSucks {
   ) {}
 
   public func() {
-
+    // testasdf
   }
 }
