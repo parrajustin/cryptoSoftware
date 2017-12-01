@@ -1,3 +1,5 @@
+
+// new update
 export class NoContentComponent {
 
   public publicVar: number = 0;
@@ -8,6 +10,6 @@ export class NoContentComponent {
   ) {}
 
   public func() {
-    
+
   }
 }
