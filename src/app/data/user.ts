@@ -10,28 +10,28 @@ export class User {
         this.firstName = makeFirstName;
         this.lastName = makeLastName;
         this.userID = makeUserID;
-     }
+    }
 
     private setFirstName(name: string) {
         this.firstName = name;
     }
 
-    private setLastName(name: string ){
+    private setLastName(name: string) {
         this.lastName = name;
     }
 
-    private getFirstName(){
+    private getFirstName() {
         return this.firstName;
     }
 
-    private getLastName(){
+    private getLastName() {
         return this.lastName;
     }
 
-    private setUserID(){
-        
+    private setUserID() {
+
     }
-    private getUserID(){
+    private getUserID() {
         return this.userID;
     }
 
@@ -39,7 +39,7 @@ export class User {
 
 
 
-export class Administrator extends User{
+export class Administrator extends User {
 
     private organization: string;
     private email: string;
@@ -48,41 +48,41 @@ export class Administrator extends User{
 
     constructor(firstname: string, lastName: string, userID: number) {
         super(firstname, lastName, userID)
-     }
+    }
 
-    public setEmail(email: string ) {
+    public setEmail(email: string) {
         this.email = email;
     }
 
-    public getEmail(){
+    public getEmail() {
         return this.email;
     }
 
-    public setOrg(organization: string ){
+    public setOrg(organization: string) {
         this.email = organization;
     }
 
-    public getOrg(){
+    public getOrg() {
         return this.organization;
     }
 
-    public setSkill(skill: number){
+    public setSkill(skill: number) {
         this.skillLevel = skill;
     }
 
-    public getSkill(){
+    public getSkill() {
         return this.skillLevel;
     }
 }
 
 
 
-export class GuestUser extends User{
+export class GuestUser extends User {
 
-    
+
 }
 
-export class RegisteredUser extends User{
+export class RegisteredUser extends User {
 
-    
+
 }
