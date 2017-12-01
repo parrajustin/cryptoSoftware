@@ -6,18 +6,18 @@ export class User {
     public lastName: string;
     public userID: number;
 
-    constructor(makeFirstName: String, makeLastName: String, makeUserID: String) {
+    constructor(makeFirstName: string, makeLastName: string, makeUserID: number) {
         this.firstName = makeFirstName;
         this.lastName = makeLastName;
         this.userID = makeUserID;
      }
 
-    private setFirstName(name: String) {
-        this.firstName = firstName;
+    private setFirstName(name: string) {
+        this.firstName = name;
     }
 
-    private setLastName(name: String ){
-        this.lastName = lastname
+    private setLastName(name: string ){
+        this.lastName = name;
     }
 
     private getFirstName(){
@@ -41,16 +41,16 @@ export class User {
 
 export class Administrator extends User{
 
-    private organization: String;
-    private email: String;
+    private organization: string;
+    private email: string;
     private skillLevel: number;
 
 
-    constructor(firstname: String, lastName: String, userID: String) {
-        
+    constructor(firstname: string, lastName: string, userID: number) {
+        super(firstname, lastName, userID)
      }
 
-    public setEmail(email: String ) {
+    public setEmail(email: string ) {
         this.email = email;
     }
 
@@ -58,7 +58,7 @@ export class Administrator extends User{
         return this.email;
     }
 
-    public setOrg(organization: String ){
+    public setOrg(organization: string ){
         this.email = organization;
     }
 
