@@ -1,6 +1,6 @@
 
 // new update
-export class NoContentComponent {
+export class justinSucks {
 
   public publicVar: number = 0;
   public otherVar: string = "hi";
