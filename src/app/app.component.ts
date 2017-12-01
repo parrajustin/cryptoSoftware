@@ -17,11 +17,6 @@ import { Subscription } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
 import { DOCUMENT } from '@angular/platform-browser';
 
-import * as actions from './actions/state';
-import * as model from './model';
-import { DataTypes } from './model';
-import * as fromRoot from './reducers';
-import { ApiController, handleSub } from './services';
 
 /*
  * Angular 2 decorators and services
