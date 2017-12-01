@@ -6,10 +6,10 @@ export class User {
     public lastName: string;
     public userID: number;
 
-    constructor(makeFirstName: string, makeLastName: string, makeUserID: number) {
-        this.firstName = makeFirstName;
-        this.lastName = makeLastName;
-        this.userID = makeUserID;
+    constructor(options: UserOptions) {
+        this.firstName = options.firstName;
+        this.lastName = options.lastName;
+        this.userID = options.userID;
     }
 
     private setFirstName(name: string) {
@@ -37,17 +37,53 @@ export class User {
 
 }
 
+interface UserOptions{
+    firstName: string;
+    lastName: string;
+    userID: number;
+}
+
+interface RegisteredOptions extends UserOptions{
+    organization: string;
+    email: string;
+    skillLevel: number;
+}
+
 
 
 export class Administrator extends User {
 
-    private organization: string;
-    private email: string;
+    constructor(options: UserOptions) {
+        super(options);
+    }    
+}
+
+
+
+
+export class GuestUser extends User {
+
+    constructor(options: UserOptions){
+        super(options);
+    }
+
+
+}
+
+
+
+
+export class RegisteredUser extends User {
+
+    private organization: String;
+    private email: String;
     private skillLevel: number;
 
-
-    constructor(firstname: string, lastName: string, userID: number) {
-        super(firstname, lastName, userID)
+    constructor(options: RegisteredOptions){
+        super(options);
+        this.organization = options.organization;
+        this.email = options.email;
+        this.skillLevel = options.skillLevel;
     }
 
     public setEmail(email: string) {
@@ -73,16 +109,5 @@ export class Administrator extends User {
     public getSkill() {
         return this.skillLevel;
     }
-}
-
-
-
-export class GuestUser extends User {
-
-
-}
-
-export class RegisteredUser extends User {
-
 
 }
