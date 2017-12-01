@@ -1,5 +1,5 @@
 import '../styles/headings.css';
-import '../styles/styles.scss';
+import '../styles/styles.less';
 
 import { AgmCoreModule } from '@agm/core';
 import { NgModule } from '@angular/core';

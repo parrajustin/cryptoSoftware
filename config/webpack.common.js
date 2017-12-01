@@ -165,8 +165,8 @@ module.exports = function (options) {
          *
          */
         {
-          test: /\.scss$/,
-          use: ['to-string-loader', 'css-loader', 'sass-loader'],
+          test: /\.less$/,
+          use: ['to-string-loader', 'css-loader', 'less-loader'],
           exclude: [helpers.root('src', 'styles')]
         },
 
