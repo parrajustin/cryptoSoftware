@@ -1,13 +1,47 @@
-<md-sidenav-container #master>
-  <md-sidenav #sidenav [mode]="modeSet" class="md-sidenav-left md-whiteframe-z2" [opened]="openedSet">
-    TEST
-  </md-sidenav>
+<div id="appContainer" fxLayout='column'>
+  <div id="appHeader" fxFlex="0 0 80px" fxLayout='row'>
+    <div fxFlex="0 0 16px"></div>
 
-  <main>
-    <div class="main-container" #mainContainer>
-      <div class="scroll-container-app">
-        <router-outlet></router-outlet>
+    <div fxLayoutAlign="start center">UTEP & ARL</div>
+
+    <div fxFlex="0 0 16px"></div>
+  </div>
+
+  <div id="appBody" fxLayout="row" fxFlex="1 1 auto">
+    <div id="appSideBar" fxLayout="column" fxFlex="0 0 150px" *ngIf="loggedIn == 3">
+      <div class="sideBarMenuItem" fxFlex="0 0 35px" fxLayout="row" [ngStyle]="{'background-color': isOnServers? 'lightblue': 'inherit'}">
+        <div fxFlex="0 0 16px"></div>
+        <div fxFlex="1 1 auto" fxLayoutAlign="center center">Servers</div>
+        <div fxFlex="0 0 16px"></div>
+      </div>
+
+      <div class="sideBarMenuItem" fxFlex="0 0 35px" fxLayout="row">
+        <div fxFlex="0 0 16px"></div>
+        <div fxFlex="1 1 auto" fxLayoutAlign="center center">Virtual Machines</div>
+        <div fxFlex="0 0 16px"></div>
+      </div>
+
+      <div class="sideBarMenuItem" fxFlex="0 0 35px" fxLayout="row">
+        <div fxFlex="0 0 16px"></div>
+        <div fxFlex="1 1 auto" fxLayoutAlign="center center">Workshop Groups</div>
+        <div fxFlex="0 0 16px"></div>
+      </div>
+
+      <div class="sideBarMenuItem" fxFlex="0 0 35px" fxLayout="row">
+        <div fxFlex="0 0 16px"></div>
+        <div fxFlex="1 1 auto" fxLayoutAlign="center center">Workshop Units</div>
+        <div fxFlex="0 0 16px"></div>
+      </div>
+
+      <div class="sideBarMenuItem" fxFlex="0 0 35px" fxLayout="row">
+        <div fxFlex="0 0 16px"></div>
+        <div fxFlex="1 1 auto" fxLayoutAlign="center center">Statistics</div>
+        <div fxFlex="0 0 16px"></div>
       </div>
     </div>
-  </main>
-</md-sidenav-container>
+
+    <div id="routerContainer" fxFlex="1 1 auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

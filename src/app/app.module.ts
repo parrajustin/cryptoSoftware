@@ -1,85 +1,57 @@
-import '../styles/headings.css';
-import '../styles/styles.less';
-
-import { AgmCoreModule } from '@agm/core';
-import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import {
-  MD_PLACEHOLDER_GLOBAL_OPTIONS,
-  MdButtonModule,
-  MdCardModule,
-  MdChipsModule,
-  MdDialogModule,
-  MdIconModule,
-  MdInputModule,
-  MdSelectModule,
-  MdSidenavModule,
-  MdSlideToggleModule,
-  MdToolbarModule,
-  MdTooltipModule,
-} from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AgmSnazzyInfoWindowModule } from '@agm/snazzy-info-window';
-import { PreloadAllModules, RouterModule } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
-import { CookieModule } from 'ngx-cookie';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { FormsModule } from '@angular/forms';
+
+// store
+import { NgReduxModule, NgRedux } from '@angular-redux/store'; 
 
 import { AppComponent } from './app.component';
-import { APP_RESOLVER_PROVIDERS } from './app.resolver';
-import { ROUTES } from './app.routes';
-import { ENV_PROVIDERS } from './environment';
-import { NoContentComponent } from './components/no-content';
+import { environment } from '../environments/environment';
 
-// Application wide providers
-const APP_PROVIDERS = [
-  ...APP_RESOLVER_PROVIDERS
+import { LoginComponent } from './components/login';
+import { ServerComponent } from './components/server';
+import { PageNotFoundComponent } from './components/pageNotFound';
+import { rootReducer, IAppState, INITIAL_STATE, LogStateActions } from './store';
+
+const appRoutes: Routes = [
+  { path: '', component: LoginComponent },
+  { path: 'server', component: ServerComponent },
+  { path: 'virtualmachines', component: ServerComponent },
+  { path: 'groups', component: ServerComponent },
+  { path: 'units', component: ServerComponent },
+  { path: 'stat', component: ServerComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
-/**
- * `AppModule` is the main entry point into Angular2's bootstraping process
- */
 @NgModule({
-  bootstrap: [ AppComponent ],
   declarations: [
     AppComponent,
-    NoContentComponent
+    PageNotFoundComponent,
+    LoginComponent,
+    ServerComponent
   ],
-  entryComponents: [
-  ],
-  imports: [ // import Angular's modules
-    FlexLayoutModule,
-    BrowserAnimationsModule,
-    MdIconModule,
-    MdSidenavModule,
-    MdDialogModule,
-    MdTooltipModule,
-    MdToolbarModule,
-    MdChipsModule,
-    MdSelectModule,
-    MdCardModule,
-    MdSlideToggleModule,
-    MdInputModule,
-    MdButtonModule,
+  imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
-    CookieModule.forRoot({ path: 'sbc.com' }),
-    /**
-     * TODO: Change api key to one provided by AT&T
-     */
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDoaxElYk3lLbsH7PeOAiriTBR1pQfGEQM'
-    }),
-    AgmSnazzyInfoWindowModule,
-    RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
+    FlexLayoutModule,
+    NgReduxModule,
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: !environment.production, useHash: true } // <-- debugging purposes only
+    )
   ],
-  providers: [ // expose our Services and Providers into Angular's dependency injection
-    ENV_PROVIDERS,
-    APP_PROVIDERS,
-    {provide: MD_PLACEHOLDER_GLOBAL_OPTIONS, useValue: { float: 'always' }}
-  ]
+  providers: [LogStateActions],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(ngRedux: NgRedux<IAppState>) {
+    // Tell @angular-redux/store about our rootReducer and our initial state.
+    // It will use this to create a redux store for us and wire up all the
+    // events.
+    ngRedux.configureStore(
+      rootReducer,
+      INITIAL_STATE);
+  }
+}

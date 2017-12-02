@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0px 0px;
+    padding: 0px 0px;
+}
+
+.u-full-height {
+    height: 100%;
+}

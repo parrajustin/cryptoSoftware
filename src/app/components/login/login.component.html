@@ -1,0 +1,105 @@
+<div class="loginContainer" fxLayout="row" fxLayoutWrap>
+  <div class="box" fxFlex="0 0 auto">
+    <div class="header">
+      Log in: Already have an account
+    </div>
+
+
+    <form #loginForm="ngForm" class="form">
+      <div class="body" fxLayout="column">
+        <div fxFlex="0 0 15px"></div>
+
+        <input required placeholder="Email Address" name="email" maxlength="45" />
+
+        <div fxFlex="0 0 15px"></div>
+
+        <input required placeholder="Password" name="password" maxlength="45" type="password" />
+
+        <div fxFlex="0 0 15px"></div>
+
+        <button type="submit" value="submit" (click)="clickLogin()">Log in</button>
+
+        <div fxFlex="0 0 15px"></div>
+
+        <a href="#" fxLayoutAlign="end start">Forgot password</a>
+      </div>
+    </form>
+  </div>
+
+  <div fxFlex="1 1 auto" fxLayout="column" fxLayoutAlign="center center" fxLayoutWrap>
+    <div fxLayoutAlign="center center">
+      <span>OR</span>
+    </div>
+  </div>
+
+  <div class="box" fxFlex="0 0 auto">
+    <div class="header">
+      Log in: Already have an account
+    </div>
+
+    <form #registerForm="ngForm" class="form">
+      <div class="body" fxLayout="column">
+        <div fxFlex="0 0 15px"></div>
+
+        <input required placeholder="First Name" name="firstName" maxlength="45" />
+
+        <div fxFlex="0 0 15px"></div>
+
+        <input required placeholder="Last Name" name="lastName" maxlength="45" />
+
+        <div fxFlex="0 0 15px"></div>
+
+        <input required placeholder="Organization" name="org" maxlength="45" />
+
+        <div fxFlex="0 0 15px"></div>
+
+        <input required placeholder="Email Address" name="email" maxlength="45" />
+
+        <div fxFlex="0 0 15px"></div>
+
+        <input required placeholder="Password" name="password" maxlength="45" type="password" />
+
+        <div fxFlex="0 0 15px"></div>
+
+        <input required placeholder="Confirm Password" name="confirmPassword" maxlength="45" type="password" />
+
+        <div fxFlex="0 0 15px"></div>
+
+        <div fxLayout="row">
+          <span>Skill Level:</span>
+
+          <select name="skill" fxFlex="1 1 auto">
+            <option value="Novice">Novice</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+        </div>
+
+        <div fxFlex="0 0 15px"></div>
+
+        <button type="submit" value="submit">Register</button>
+      </div>
+    </form>
+  </div>
+
+  <div fxFlex="1 1 auto" fxLayout="column" fxLayoutAlign="center center" fxLayoutWrap>
+    <div fxLayoutAlign="center center">
+      <span>OR</span>
+    </div>
+  </div>
+
+  <div class="box" fxFlex="0 0 auto">
+    <div class="header">
+      Log in: Already have an account
+    </div>
+
+
+    <div class="form body" fxLayout="column">
+      <div fxFlex="0 0 15px"></div>
+
+      <div fxFlex="0 0 15px"></div>
+
+      <button type="submit" value="submit" (click)="clickGuestLogin()">Guest Login</button>
+    </div>
+  </div>
+</div>

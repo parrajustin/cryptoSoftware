@@ -1,56 +1,20 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 import { NgRedux } from '@angular-redux/store';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 
-import { LogStateActions, IAppState } from './store';
-import { LoginState } from './models';
-import { handleSub } from './util';
+import { LogStateActions, IAppState } from '../../store';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  selector: 'login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.less']
 })
-export class AppComponent implements OnDestroy {
-  public loggedIn: LoginState = LoginState.notLoggedIn;
-  public isOnServers: boolean = false;
-
-  private subArray: Subscription[] = [];
+export class LoginComponent {
 
   constructor(
-    public router: Router,
     private ngRedux: NgRedux<IAppState>,
     private actions: LogStateActions
-  ) {
-    const loggedInSub = ngRedux.select<LoginState>('loginState')
-    .subscribe(state => {
-      this.loggedIn = state;
+  ) {}
 
-      let url = "#";
-      switch (this.loggedIn) {
-        case LoginState.guest:
-          break;
-        case LoginState.admin:
-          url = "/server";
-          this.isOnServers = true;
-          break;
-      }
-
-      this.router.navigateByUrl(url).catch(
-        (reason: any) => {
-          console.error(JSON.stringify((reason)));
-        }
-      );
-    });
-
-    this.subArray.push(loggedInSub);
-  }
-
-  ngOnDestroy() {
-    handleSub(this.subArray);
-  }
-  
   //                                                                                                                        
   //                                                                                                                        
   //                                                                                         tttt                           
@@ -75,46 +39,13 @@ export class AppComponent implements OnDestroy {
   //                                                                                                                        
   //                                                                                                                        
   //                                                                                                                        
-  //    
-
-  public clickServer() {
-    this.router.navigateByUrl('/server').catch(
-      (reason: any) => {
-        console.error(JSON.stringify((reason)));
-      }
-    );
+  //      
+  
+  public clickGuestLogin() {
+    this.ngRedux.dispatch(this.actions.guestLogin());
   }
 
-  public clickVMs() {
-    this.router.navigateByUrl('/virtualmachines').catch(
-      (reason: any) => {
-        console.error(JSON.stringify((reason)));
-      }
-    );
+  public clickLogin() {
+    this.ngRedux.dispatch(this.actions.adminLogin());
   }
-
-  public clickGroup() {
-    this.router.navigateByUrl('/groups').catch(
-      (reason: any) => {
-        console.error(JSON.stringify((reason)));
-      }
-    );
-  }
-
-  public clickUnits() {
-    this.router.navigateByUrl('/units').catch(
-      (reason: any) => {
-        console.error(JSON.stringify((reason)));
-      }
-    );
-  }
-
-  public clickStat() {
-    this.router.navigateByUrl('/stat').catch(
-      (reason: any) => {
-        console.error(JSON.stringify((reason)));
-      }
-    );
-  }
-
 }

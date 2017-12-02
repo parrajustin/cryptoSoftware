@@ -1,0 +1,45 @@
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+    supported by Chrome and Opera */
+}
+
+#appContainer {
+    height: 100%;
+    width: 100%;
+
+    background-color: rgb(240, 240, 240);
+}
+
+#appHeader {
+    height: 80px;
+    width: 100%;
+    border-bottom: solid black 1px;
+
+    font-size: 48px;
+    color: orange;
+}
+
+#appSideBar {
+    border-right: solid black 1px;
+}
+
+.sideBarMenuItem {
+    .noselect;
+    margin: 3px 0px;
+    padding: 10px 0px;
+    cursor: pointer;
+
+    -webkit-transition: background-color 1s ease-in-out;
+    -moz-transition: background-color 1s ease-in-out;
+    -o-transition: background-color 1s ease-in-out;
+    transition: background-color 1s ease-in-out;
+
+    &:hover {
+        background-color: lightgrey;
+    }
+}
