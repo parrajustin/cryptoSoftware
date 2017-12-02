@@ -1,0 +1,142 @@
+#Inserting a row into REGISTERED_USER related tables
+INSERT INTO REGISTERED_USER(Remail, 
+							Rpassword, 
+							Rfirst_name, 
+							Rlast_name, 
+							Rorganization, 
+							Rskill_level)
+			VALUE	(<email to insert>,
+					<password to insert>,
+					<first name to insert>,
+					<last name to insert>,
+					<organization to insert>,
+					<skill level to insert>);
+
+INSERT INTO USER_HISTORY(Remail, Workshop)
+			VALUE (<email to insert>, <Workshop to insert>);
+
+
+#Inserting a row into SERVER table
+INSERT INTO SERVER(Suser_name,
+					Spassword,
+					Sstatus,
+					Sip_address)
+			VALUE (<user name to insert>,
+					<password to insert>,
+					<status to insert>,
+					<ip address object to insert>);
+
+
+#Inserting a row into VIRTUAL_MACHINE related tables
+INSERT INTO VIRTUAL_MACHINE(VMname,
+							VMvrdp,
+							VMrecent_snapshot,
+							VMhost_server)
+			VALUE (<name of virtual machine>,
+					<vrdp to insert>,
+					<recent snapshot to insert>,
+					<host server object to insert>);
+
+INSERT INTO VM_NetAdapters(VMname, Network_Adaptor)
+			VALUE (<name of virtual machine>, <Network Adapter object to insert>);
+
+
+#Inserting a row into WORKSHOP_UNIT related tables
+INSERT INTO WORKSHOP_UNIT(WUname,
+						  WUdescription,
+						  WUpersistence_session,
+						  WUhost,
+						  WUpublished_date,
+						  WUstatus)
+			VALUE (<name of workshop unit>,
+				   <description to insert>,
+				   <persistence session object to insert>,
+				   <Host object to insert>,
+				   <published date>,
+				   <status to insert>);
+
+INSERT INTO UNIT_VM(WUname, VMname)
+			VALUE (<name of workshop unit>, <name of associated virtual machine>);
+
+INSERT INTO UNIT_REFERENCE_MATERIAL(WUname,
+									RMtag,
+									RMfile_path)
+			VALUE (<name of workshop unit>,
+				   <material tag of the reference material object goes here>,
+				   <file path of reference material object goes here>);
+
+INSERT INTO UNIT_CONNECTION_STRING(WUname,
+								   CStag,
+								   CSconfiguration_file)
+			VALUE (<name of workshop unit>,
+				   <material tag of the connection string object goes here>,
+				   <configuration file from connection string object goes here>);
+
+
+#Inserting a row into WORKSHOP_GROUP related tables
+INSERT INTO WORKSHOP_GROUP(WGname,
+						   WGdescription,
+						   WGpersistence_session,
+						   WGhost,
+						   WGstatus,
+						   WGpublished_date)
+			VALUE (<name of workshop group>,
+				   <description to insert>,
+				   <persistence session object to insert>,
+				   <Host object to insert>,
+				   <status to insert>,
+				   <published date>);
+
+INSERT INTO GROUP_UNIT(WGname, WUname)
+			VALUE (<name of workshop group>, <name of workshop unit>);
+
+INSERT INTO GROUP_REFERENCE_MATERIAL(WGname,
+									 RMtag,
+									 RMfile_path)
+			VALUE (<name of workshop group>,
+				   <material tag of the reference material object goes here>,
+				   <file path of reference material object goes here>);
+
+
+##Other queries
+
+-- Queries for REGISTERED_USER
+
+#To retrieve hashed password (include quotes)
+SELECT Rpassword FROM REGISTERED_USER WHERE Remail="<email of user signing in>";
+
+#To delete a registered user
+DELETE FROM REGISTERED_USER WHERE Remail="<email of user to delete>";
+
+#To change user's skill level
+UPDATE REGISTERED_USER SET Rskill_level= <"Novice", "Intermediate", or "Advanced"> 
+			WHERE Remail="<email of user>";
+
+#Template to update other fields of a registered user
+UPDATE REGISTERED_USER SET <column name> = "<updated entry>" 
+			WHERE Remail="<email of user>";
+
+-- Queries for SERVER
+
+#To change a Server's status
+UPDATE SERVER SET Sstatus = <"Running", "Offline"> 
+			WHERE Suser_name = "<user name of server>";
+
+#Template to update other fields of a server
+UPDATE SERVER SET <column name> = <updated entry> 
+			WHERE Suser_name = "<user name of server>";
+
+
+-- Queries for VIRTUAL_MACHINE
+
+#Template to update fields of a virtual machine
+UPDATE VIRTUAL_MACHINE SET <column name> = <updated entry>
+			WHERE VMname = "<name of virtual machine>"
+
+
+
+
+
+
+
+
