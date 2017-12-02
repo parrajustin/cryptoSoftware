@@ -14,7 +14,7 @@ import { handleSub } from './util';
 })
 export class AppComponent implements OnDestroy {
   public loggedIn: LoginState = LoginState.notLoggedIn;
-  public isOnServers: boolean = false;
+  public url: String = '';
 
   private subArray: Subscription[] = [];
 
@@ -33,7 +33,6 @@ export class AppComponent implements OnDestroy {
           break;
         case LoginState.admin:
           url = "/server";
-          this.isOnServers = true;
           break;
       }
 
@@ -44,7 +43,14 @@ export class AppComponent implements OnDestroy {
       );
     });
 
-    this.subArray.push(loggedInSub);
+    const routerSub = this.router.events.subscribe(
+      (event: any) => {
+        this.url = event['url'];
+        console.log(event);
+      }
+    )
+
+    this.subArray.push(loggedInSub, routerSub);
   }
 
   ngOnDestroy() {

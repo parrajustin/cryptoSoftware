@@ -1,3 +1,20 @@
+### steps to use this project
+- first install node js from [here](https://nodejs.org/en/), use version 8
+- test this command in a command line ```node -v```, you should get some number like v8.....
+- pull from github https://github.com/parrajustin/cryptoSoftware.git
+- now open up your command line of choice
+- navigate to the directory you pulled, example: ``` cd /c/Users/idk/cryptoSoftware ```
+- now run ```npm install```
+- and then ```npm install -g @angular/cli```
+
+# how to run
+```bash
+npm serve
+```
+
+go to [http://localhost:3000](http://localhost:3000) in your browser
+
+
 # AngularProj
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.5.
