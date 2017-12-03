@@ -95,7 +95,7 @@ export class RegisteredUser extends User {
     }
 
     public setOrg(organization: string) {
-        this.email = organization;
+        this.organization = organization;
     }
 
     public getOrg() {
