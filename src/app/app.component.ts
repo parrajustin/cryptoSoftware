@@ -38,7 +38,7 @@ export class AppComponent implements OnDestroy {
 
       this.router.navigateByUrl(url).catch(
         (reason: any) => {
-          console.error(JSON.stringify((reason)));
+          throw new Error(reason);
         }
       );
     });
