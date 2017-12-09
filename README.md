@@ -14,7 +14,6 @@ npm serve
 
 go to [http://localhost:3000](http://localhost:3000) in your browser
 
-
 # AngularProj
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.5.
