@@ -11,3 +11,19 @@ html, body {
 .u-full-height {
     height: 100%;
 }
+
+.tableBox {
+    border: 1px solid black;
+}
+
+.tableHeader {
+    background-color: lightcyan;
+    font-size: 24px;
+    border-bottom: 1px solid black;
+}
+
+.tableBody {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+}
