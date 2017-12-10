@@ -2,7 +2,7 @@ import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatInputModule, MatSelectModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatSelectModule, MatDialogModule, MatCheckboxModule, MatIconModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -66,6 +66,7 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatIconModule,
     RouterModule.forRoot(
       appRoutes,
       // { enableTracing: !environment.production, useHash: true } // <-- debugging purposes only

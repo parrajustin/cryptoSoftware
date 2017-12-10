@@ -36,6 +36,10 @@ export class WorkshopUnitsComponent {
   ) {}
 
   public ngOnInit() {
+    this.getData();
+  }
+
+  public getData() {
     const sub = this.api.get('/api/unit').subscribe(
       (value) => {
         this.data = (value) as unitArray[];
@@ -62,6 +66,7 @@ export class WorkshopUnitsComponent {
           const httpSub = this.api.post('/api/unit/add', value).subscribe(
             (value) => {
               console.log(value);
+              this.getData();
             }
           );
           this.subArray.push(httpSub);
@@ -107,48 +112,76 @@ export class WorkshopUnitsComponent {
 @Component({
   selector: 'unitListItem',
   template: `
-  <div fxLayout="row" class="tableBodyRow">
-    <div fxFlex="0 0 16px"></div>
+  <div fxLayout="column">
+    <div fxLayout="row" class="tableBodyRow">
+      <div fxFlex="0 0 16px"></div>
 
-    <div fxFlex="0 0 auto" fxLayoutAlign="center center">
-      <mat-checkbox></mat-checkbox>
+      <div fxFlex="0 0 auto" fxLayoutAlign="center center">
+        <mat-checkbox></mat-checkbox>
+      </div>
+
+      <div fxFlex="1 0 10px" fxLayoutAlign="center center">
+        <div fxFlex="0 0 5px"></div>
+        <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="center center">
+          <button mat-icon-button (click)="dropDown = true;" *ngIf="!dropDown"><mat-icon>arrow_drop_down</mat-icon></button>
+          <button mat-icon-button (click)="dropDown = false;" *ngIf="dropDown"><mat-icon>arrow_drop_up</mat-icon></button>
+
+          <div fxFlex="1 1 auto" fxLayoutAlign="center center">{{ item['WUname'] }}</div>
+        </div>
+        <div fxFlex="0 0 5px"></div>
+      </div>
+
+      <div fxFlex="1 0 10px" fxLayoutAlign="center center">
+        <div fxFlex="0 0 5px"></div>
+        0
+        <div fxFlex="0 0 5px"></div>
+      </div>
+
+      <div fxFlex="1 0 10px" fxLayoutAlign="center center">
+        <div fxFlex="0 0 5px"></div>
+        {{ item['WUhost'] }}
+        <div fxFlex="0 0 5px"></div>
+      </div>
+
+      <div fxFlex="1 0 10px" fxLayoutAlign="center center">
+        <div fxFlex="0 0 5px"></div>
+        {{ item['WUpersistence_session'] }}
+        <div fxFlex="0 0 5px"></div>
+      </div>
+
+      <div fxFlex="1 0 10px" fxLayoutAlign="center center">
+        <div fxFlex="0 0 5px"></div>
+        {{ item['WUstatus'] }}
+        <div fxFlex="0 0 5px"></div>
+      </div>
+
+      <div fxFlex="0 0 16px"></div>
     </div>
-
-    <div fxFlex="1 0 10px" fxLayoutAlign="center center">
+    <div fxLayout="column" fxFlex="0 0 auto" *ngIf="dropDown" class="tableBodyRow">
       <div fxFlex="0 0 5px"></div>
-      {{ item['WUname'] }}
+
+      <div fxLayout="row" fxFlex="0 0 auto">
+        <div fxFlex="0 0 16px"></div>
+        Description: {{ item['WUdescription'] }}
+        <div fxFlex="0 0 16px"></div>
+      </div>
+
+      <div fxFlex="0 0 15px"></div>
+
+      <div fxLayout="row" fxFlex="0 0 auto">
+        <div fxFlex="0 0 16px"></div>
+        Virtual Machines:
+        <div fxFlex="0 0 16px"></div>
+      </div>
+
       <div fxFlex="0 0 5px"></div>
     </div>
-
-    <div fxFlex="1 0 10px" fxLayoutAlign="center center">
-      <div fxFlex="0 0 5px"></div>
-      0
-      <div fxFlex="0 0 5px"></div>
-    </div>
-
-    <div fxFlex="1 0 10px" fxLayoutAlign="center center">
-      <div fxFlex="0 0 5px"></div>
-      {{ item['WUhost'] }}
-      <div fxFlex="0 0 5px"></div>
-    </div>
-
-    <div fxFlex="1 0 10px" fxLayoutAlign="center center">
-      <div fxFlex="0 0 5px"></div>
-      {{ item['WUpersistence_session'] }}
-      <div fxFlex="0 0 5px"></div>
-    </div>
-
-    <div fxFlex="1 0 10px" fxLayoutAlign="center center">
-      <div fxFlex="0 0 5px"></div>
-      {{ item['WUstatus'] }}
-      <div fxFlex="0 0 5px"></div>
-    </div>
-
-    <div fxFlex="0 0 16px"></div>
   </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush 
 })
 export class UnitListComponent {
   @Input() public item;
+
+  public dropDown: boolean = false;
 }
