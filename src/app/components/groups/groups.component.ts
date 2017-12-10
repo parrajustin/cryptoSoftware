@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
 
@@ -34,6 +34,7 @@ interface guArray {
 export class WorkshopGroupsComponent implements OnInit {
   private subArray: Subscription[] = [];
   public data: groupArray[] = [];
+  private selectedGroups: groupArray[] = [];
 
   constructor(
     private api: ApiController,
@@ -83,6 +84,31 @@ export class WorkshopGroupsComponent implements OnInit {
     this.subArray.push(sub);
   }
 
+  public onClickDelete() {
+    const len = this.selectedGroups.length;
+    for (let i = 0; i < len; i++) {
+      console.log('deleting: ' +  this.selectedGroups[i]);
+      const httpSub = this.api.post('/api/group/remove', { group: this.selectedGroups[i]}).subscribe(
+        (value) => {
+          console.log(value);
+        }
+      );
+      this.subArray.push(httpSub);
+    }
+    this.getData();
+  }
+
+  public deleteEvent(event) {
+    if (event['add']) {
+      this.selectedGroups.push(event['key']);
+    } else {
+      const index = this.selectedGroups.indexOf(event['key']);
+      if (index != -1) {
+        this.selectedGroups.splice(index, 1);
+      }
+    }
+  }
+
   public ngOnDestroy() {
     handleSub(this.subArray);
   }
@@ -123,7 +149,7 @@ export class WorkshopGroupsComponent implements OnInit {
       <div fxFlex="0 0 16px"></div>
 
       <div fxFlex="0 0 auto" fxLayoutAlign="center center">
-        <mat-checkbox></mat-checkbox>
+        <mat-checkbox (change)="changeCheck($event)"></mat-checkbox>
       </div>
 
       <div fxFlex="1 0 10px" fxLayoutAlign="center center">
@@ -190,6 +216,7 @@ export class WorkshopGroupsComponent implements OnInit {
 export class GroupListComponent {
   private subArray: Subscription[] = [];
   @Input() public item;
+  @Output() public deleteEvent: EventEmitter<{ key: string; add: boolean }> = new EventEmitter();
 
   public dropDown: boolean = false;
   public noWU: number = 0;
@@ -201,6 +228,10 @@ export class GroupListComponent {
 
   public ngOnInit() {
     this.getData();
+  }
+
+  public changeCheck(event) {
+    this.deleteEvent.emit({ key: this.item['WGname'], add: event['checked'] });
   }
 
   public getData() {

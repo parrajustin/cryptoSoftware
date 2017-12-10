@@ -12,7 +12,7 @@
 
       <div fxFlex="0 0 15px"></div>
 
-      <button mat-raised-button>Delete</button>
+      <button mat-raised-button (click)="onClickDelete()">Delete</button>
 
       <div fxFlex="0 0 15px"></div>
 
@@ -68,7 +68,7 @@
         </div>
   
         <div class="tableBodyScrollViewer" fxFlex="1 0 auto">
-            <groupListItem *ngFor="let group of data" [item]="group"></groupListItem>
+            <groupListItem (deleteEvent)="deleteEvent($event)" *ngFor="let group of data" [item]="group"></groupListItem>
         </div>
   
       </div>
