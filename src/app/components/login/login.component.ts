@@ -1,12 +1,10 @@
-import { BehaviorSubject } from 'rxjs/Rx';
 import { NgRedux } from '@angular-redux/store';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
 import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
 
-import { LogStateActions, IAppState } from '../../store';
+import { ApiController } from '../../services';
+import { IAppState, LogStateActions } from '../../store';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -80,7 +78,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
   constructor(
-    private http: HttpClient,
+    private api: ApiController,
     private ngRedux: NgRedux<IAppState>,
     private actions: LogStateActions
   ) {
@@ -144,13 +142,12 @@ export class LoginComponent implements OnInit {
       const directive = event.directives[i];
       this.login[directive.name] = directive.value;
     }    
-
-    console.log(this.login);
     
-    this.http.post<LoginResponse>(`/api/user/login`, this.login)
+    this.api.post<LoginResponse>(`/api/user/login`, this.login)
       .subscribe((response: LoginResponse) => {
         if (response.success) {
-          console.log(response);
+          this.ngRedux.dispatch(this.actions.setToken(response.token));
+          this.ngRedux.dispatch(this.actions.adminLogin());
         } else {
           alert(response.reason);
         }
@@ -166,11 +163,9 @@ export class LoginComponent implements OnInit {
       }
     }    
 
-    console.log(this.register);
-
     this.registerSubmit = true;
 
-    this.http.post<RegisterResponse>(`/api/user/register`, this.register)
+    this.api.post<RegisterResponse>(`/api/user/register`, this.register)
       .subscribe((response: RegisterResponse) => {
         if (response.success) {
           console.log(response);

@@ -27,7 +27,7 @@ export class AppComponent implements OnDestroy {
     .subscribe(state => {
       this.loggedIn = state;
 
-      let url = "#";
+      let url = "";
       switch (this.loggedIn) {
         case LoginState.guest:
           break;

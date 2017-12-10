@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="header" fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="1 0 16px"></div>
+    <span>New Server</span>
+    <div fxFlex="1 0 16px"></div>
+  </div>
+  <div class="bodyContainer">
+    <div class="body">
+      <form [formGroup]="serverForm" #formDir="ngForm" (ngSubmit)="onSubmit(serverFormRef)" #serverFormRef="ngForm">
+          <div class="body" fxLayout="column">
+            <div fxFlex="0 0 15px"></div>
+            
+            <mat-form-field>
+              <input formControlName="ip" matInput required placeholder="Server.IP.Address:Port" [formControl]="ipFormControl" name="ip" maxlength="100"/>
+              <mat-error *ngIf="ipFormControl.hasError('pattern')">
+                ip must be #.#.#.#:# or #.#.#.# with default port 18083
+              </mat-error>
+            </mat-form-field>
+    
+            <mat-form-field>
+              <input formControlName="user" matInput required placeholder="User Name" name="user" maxlength="200"/>
+            </mat-form-field>
+    
+            <mat-form-field>
+              <input formControlName="pass" matInput required placeholder="Password" type="password" name="pass" maxlength="200"/>
+            </mat-form-field>
+            
+            <button mat-raised-button type="submit" value="submit" [disabled]="!serverFormRef.form.valid">Add</button>
+
+            <div fxFlex="0 0 15px"></div>
+
+            <button mat-raised-button type="button" mat-dialog-close>Cancel</button>
+    
+            <div fxFlex="0 0 15px"></div>\
+          </div>
+        </form>
+    </div>
+  </div>
+</div>

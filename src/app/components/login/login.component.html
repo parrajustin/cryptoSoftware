@@ -17,7 +17,7 @@
           <input formControlName="pass" matInput required placeholder="Password" type="password" name="pass" maxlength="200"/>
         </mat-form-field>
         
-        <button mat-raised-button type="submit" value="submit" mat-button [disabled]="!loginFormRef.form.valid">Login</button>
+        <button mat-raised-button type="submit" value="submit" [disabled]="!loginFormRef.form.valid">Login</button>
 
         <div fxFlex="0 0 15px"></div>
 
@@ -95,7 +95,7 @@
 
         <div fxFlex="0 0 15px"></div>
 
-        <button mat-raised-button type="submit" value="submit" mat-button [disabled]="!registerFormRef.form.valid">Register</button>
+        <button mat-raised-button type="submit" value="submit" [disabled]="!registerFormRef.form.valid">Register</button>
       </div>
     </form>
   </div>

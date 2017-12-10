@@ -2,7 +2,7 @@ import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatSelectModule, MatDialogModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -12,21 +12,25 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login';
 import { PageNotFoundComponent } from './components/pageNotFound';
-import { ServerComponent } from './components/server';
+import { ServerComponent, AddDialogComponent } from './components/server';
 import { VirtualMachinesComponent } from './components/virtualmachines';
 import { WorkshopGroupsComponent } from './components/groups';
 import { WorkshopUnitsComponent } from './components/units';
 import { IAppState, INITIAL_STATE, LogStateActions, rootReducer } from './store';
 
+//guard
+import { AdminGuard, ApiController } from './services';
+
 // store
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'server', component: ServerComponent },
-  { path: 'virtualmachines', component: VirtualMachinesComponent },
-  { path: 'groups', component: WorkshopGroupsComponent },
-  { path: 'units', component: WorkshopUnitsComponent },
-  { path: 'stat', component: ServerComponent },
-  { path: '**', component: PageNotFoundComponent }
+  { path: 'virtualmachines', component: VirtualMachinesComponent, canActivate: [AdminGuard] },
+  { path: 'groups', component: WorkshopGroupsComponent, canActivate: [AdminGuard] },
+  { path: 'units', component: WorkshopUnitsComponent, canActivate: [AdminGuard] },
+  { path: 'server', component: ServerComponent, canActivate: [AdminGuard] },
+  { path: 'stat', component: ServerComponent, canActivate: [AdminGuard] },
+  { path: '*', component: PageNotFoundComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
@@ -37,7 +41,11 @@ const appRoutes: Routes = [
     ServerComponent,
     WorkshopUnitsComponent,
     VirtualMachinesComponent,
-    WorkshopGroupsComponent
+    WorkshopGroupsComponent,
+    AddDialogComponent
+  ],
+  entryComponents: [
+    AddDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -48,14 +56,15 @@ const appRoutes: Routes = [
     NoopAnimationsModule,
     MatButtonModule,
     MatInputModule,
+    MatDialogModule,
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: !environment.production, useHash: true } // <-- debugging purposes only
+      // { enableTracing: !environment.production, useHash: true } // <-- debugging purposes only
     )
   ],
-  providers: [LogStateActions],
+  providers: [LogStateActions, AdminGuard, ApiController],
   bootstrap: [AppComponent]
 })
 export class AppModule {
