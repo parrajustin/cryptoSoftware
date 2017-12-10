@@ -6,6 +6,7 @@ import { MatButtonModule, MatInputModule, MatSelectModule } from '@angular/mater
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     FlexLayoutModule,
     NgReduxModule,
     NoopAnimationsModule,

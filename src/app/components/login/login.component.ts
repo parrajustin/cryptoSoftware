@@ -1,9 +1,10 @@
 import { BehaviorSubject } from 'rxjs/Rx';
 import { NgRedux } from '@angular-redux/store';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { FormControl, FormGroupDirective, NgForm, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { LogStateActions, IAppState } from '../../store';
 
@@ -15,93 +16,93 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
+interface RegisterResponse {
+  'success': boolean;
+  'reason': string;
+  'token': string;
+}
+
+interface LoginResponse {
+  'success': boolean;
+  'reason': string;
+  'token': string;
+  'isAdmin': boolean;
+  'lname': string;
+  'fname': string;
+  'skill': number;
+}
+
 
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.less']
 })
-export class LoginComponent {                                
-  private _password: string = "";
-  private _confirmPassword: string = "";
-  public confirmObservable: BehaviorSubject<ValidationErrors|null> = new BehaviorSubject<ValidationErrors|null>({'confirm': true} as ValidationErrors);
+export class LoginComponent implements OnInit {   
+  public register = {
+    'fname': '',
+    'lname': '',
+    'org': '',
+    'email': '',
+    'pass': '',
+    'skill': ''
+  };
+
+  public login = {
+    'email': '',
+    'pass': ''
+  }
+
+  public registerSubmit: boolean = false;
 
   public emailFormControl = new FormControl('', [
     Validators.required,
-    Validators.email,
+    Validators.email
   ]);
-  public passwordFormControl = new FormControl('', [
-    Validators.required,
+  public passwordFormControl = new FormControl('', [ 
+    Validators.required, 
     Validators.minLength(6),
     (c) => {
       console.log(c);
       return null;
     }
-  ], [
-    (control: AbstractControl): Promise<ValidationErrors|null>|Observable<ValidationErrors|null> => {
-      console.log('test');
-      return this.confirmObservable;
-    }
+  ]); 
+  public fnameFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/^\S*$/)
   ]);
-  public formControl = new FormControl('', [
-    Validators.required
-  ])
+  public lnameFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/^\S*$/)
+  ]);
 
-  public matcher = new MyErrorStateMatcher();
+  public registerForm: FormGroup;
+  public loginForm: FormGroup;
 
   constructor(
+    private http: HttpClient,
     private ngRedux: NgRedux<IAppState>,
     private actions: LogStateActions
   ) {
-    this.confirmObservable.subscribe((c) => {
-      console.log(c);
-    })
   }
+  
 
-  //                                                                         
-  //                                                                         
-  //                                                                         
-  //                                                                         
-  //                                                                         
-  //                                                                         
-  //  ppppp   ppppppppp     aaaaaaaaaaaaa      ssssssssss       ssssssssss   
-  //  p::::ppp:::::::::p    a::::::::::::a   ss::::::::::s    ss::::::::::s  
-  //  p:::::::::::::::::p   aaaaaaaaa:::::ass:::::::::::::s ss:::::::::::::s 
-  //  pp::::::ppppp::::::p           a::::as::::::ssss:::::ss::::::ssss:::::s
-  //   p:::::p     p:::::p    aaaaaaa:::::a s:::::s  ssssss  s:::::s  ssssss 
-  //   p:::::p     p:::::p  aa::::::::::::a   s::::::s         s::::::s      
-  //   p:::::p     p:::::p a::::aaaa::::::a      s::::::s         s::::::s   
-  //   p:::::p    p::::::pa::::a    a:::::assssss   s:::::s ssssss   s:::::s 
-  //   p:::::ppppp:::::::pa::::a    a:::::as:::::ssss::::::ss:::::ssss::::::s
-  //   p::::::::::::::::p a:::::aaaa::::::as::::::::::::::s s::::::::::::::s 
-  //   p::::::::::::::pp   a::::::::::aa:::as:::::::::::ss   s:::::::::::ss  
-  //   p::::::pppppppp      aaaaaaaaaa  aaaa sssssssssss      sssssssssss    
-  //   p:::::p                                                               
-  //   p:::::p                                                               
-  //  p:::::::p                                                              
-  //  p:::::::p                                                              
-  //  p:::::::p                                                              
-  //  ppppppppp                                                              
-  //                                         
-  public password(value) {
-    console.log("p: " + value);
-    this._password = value;
-    if (value === this._confirmPassword) {
-      this.confirmObservable.next(null);
-    } else {
-      this.confirmObservable.next({'confirm': true});
-    }
+  public ngOnInit() {
+    this.registerForm = new FormGroup({
+      'fname': this.fnameFormControl,
+      'lname': this.lnameFormControl,
+      'org': new FormControl('', Validators.required),
+      'cpass': new FormControl('', Validators.required),
+      'skill': new FormControl('', Validators.required),
+      'email': this.emailFormControl,
+      'pass': this.passwordFormControl
+    });
+
+    this.loginForm = new FormGroup({
+      'email': new FormControl('', Validators.required),
+      'pass': new FormControl('', Validators.required),
+    });
   }
-
-  public confirmPassword(value) {
-    console.log('cp: ' + value);
-    this._confirmPassword = value;
-    if (value === this._password) {
-      this.confirmObservable.next(null);
-    } else {
-      this.confirmObservable.next({'confirm': true});
-    }
-  };
 
   //                                                                                                                        
   //                                                                                                                        
@@ -137,7 +138,47 @@ export class LoginComponent {
     this.ngRedux.dispatch(this.actions.adminLogin());
   }
 
+  public onLogin(event) {
+    const len = event.directives.length;
+    for (let i = 0; i < len; i++) {
+      const directive = event.directives[i];
+      this.login[directive.name] = directive.value;
+    }    
+
+    console.log(this.login);
+    
+    this.http.post<LoginResponse>(`/api/user/login`, this.login)
+      .subscribe((response: LoginResponse) => {
+        if (response.success) {
+          console.log(response);
+        } else {
+          alert(response.reason);
+        }
+      });
+  }
+
   public onRegister(event) {
-    console.log(event);
+    const len = event.directives.length;
+    for (let i = 0; i < len; i++) {
+      const directive = event.directives[i];
+      if (directive.name !== "cpass") {
+        this.register[directive.name] = directive.value;
+      }
+    }    
+
+    console.log(this.register);
+
+    this.registerSubmit = true;
+
+    this.http.post<RegisterResponse>(`/api/user/register`, this.register)
+      .subscribe((response: RegisterResponse) => {
+        if (response.success) {
+          console.log(response);
+          this.ngRedux.dispatch(this.actions.setToken(response.token));
+          this.ngRedux.dispatch(this.actions.registeredLogin());
+        } else {
+          alert(response.reason);
+        }
+      });
   }
 }

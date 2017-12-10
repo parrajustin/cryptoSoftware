@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Action } from 'redux';
 
+interface ActionPayload extends Action {
+  payload: any;
+}
+
 @Injectable()
 export class LogStateActions {
   static LOGINGUEST = "GUEST";
   static LOGINREGISTERED = "REGISTERED";
   static LOGINADMIN = "ADMIN";
   static LOGOUT = "LOGOUT";
+  static SETTOKEN = "TOKEN";
 
   adminLogin(): Action {
     return { type: LogStateActions.LOGINADMIN };
@@ -22,5 +27,9 @@ export class LogStateActions {
 
   guestLogin(): Action {
     return { type: LogStateActions.LOGINGUEST };
+  }
+
+  setToken(token: string): ActionPayload {
+    return { type: LogStateActions.SETTOKEN, payload: token };
   }
 }

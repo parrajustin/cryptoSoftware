@@ -5,19 +5,19 @@
     </div>
 
 
-    <form #loginForm="ngForm" class="form">
+    <form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="onLogin(loginFormRef)" #loginFormRef="ngForm">
       <div class="body" fxLayout="column">
         <div fxFlex="0 0 15px"></div>
+        
+        <mat-form-field>
+          <input formControlName="email" matInput required placeholder="Email" name="email" maxlength="100"/>
+        </mat-form-field>
 
-        <input required placeholder="Email Address" name="email" maxlength="45" />
-
-        <div fxFlex="0 0 15px"></div>
-
-        <input required placeholder="Password" name="password" maxlength="45" type="password" />
-
-        <div fxFlex="0 0 15px"></div>
-
-        <button mat-raised-button type="submit" value="submit" (click)="clickLogin()" mat-button>Log in</button>
+        <mat-form-field>
+          <input formControlName="pass" matInput required placeholder="Password" type="password" name="pass" maxlength="200"/>
+        </mat-form-field>
+        
+        <button mat-raised-button type="submit" value="submit" mat-button [disabled]="!loginFormRef.form.valid">Login</button>
 
         <div fxFlex="0 0 15px"></div>
 
@@ -37,26 +37,30 @@
       Register: Don't have an account
     </div>
 
-    <form #registerForm="ngForm" class="form" (ngSubmit)="onRegister($event)">
-      {{ registerForm.form | json }}
+    <form [formGroup]="registerForm" #formDir="ngForm" (ngSubmit)="onRegister(registerFormRef)" #registerFormRef="ngForm">
       <div class="body" fxLayout="column">
         <div fxFlex="0 0 15px"></div>
 
         <mat-form-field>
-          <input matInput required placeholder="First Name" name="firstName" maxlength="45" [formControl]="formControl" [errorStateMatcher]="matcher"/>
+          <input formControlName="fname" matInput required placeholder="First Name" name="firstName" maxlength="100" [formControl]="fnameFormControl" [errorStateMatcher]="matcher"/>
+          <mat-error *ngIf="fnameFormControl.hasError('pattern')">
+            Name must not contain spaces
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput required placeholder="Last Name" name="lastName" maxlength="45" [formControl]="formControl" [errorStateMatcher]="matcher"/>
+          <input formControlName="lname" matInput required placeholder="Last Name" name="lastName" maxlength="50" [formControl]="lnameFormControl" [errorStateMatcher]="matcher"/>
+          <mat-error *ngIf="lnameFormControl.hasError('required')">
+            Name must not contain spaces
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput required placeholder="Organization" name="org" maxlength="45" [formControl]="formControl" [errorStateMatcher]="matcher"/>
+          <input formControlName="org" matInput required placeholder="Organization" name="org" maxlength="45" [errorStateMatcher]="matcher"/>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput required placeholder="Email Address" name="email" maxlength="45" [formControl]="emailFormControl" [errorStateMatcher]="matcher"/>
-          <mat-hint>Enter valid email!</mat-hint>
+          <input formControlName="email" matInput required placeholder="Email Address" name="email" maxlength="45" [formControl]="emailFormControl" [errorStateMatcher]="matcher"/>
           <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
             Please enter a valid email address
           </mat-error>
@@ -66,30 +70,32 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput required placeholder="Password" name="password" maxlength="45" type="password" [formControl]="passwordFormControl" [errorStateMatcher]="matcher"/>
-          <mat-hint>At least 6 characters!</mat-hint>
+          <input formControlName="pass" matInput required placeholder="Password" name="password" maxlength="45" type="password" [formControl]="passwordFormControl" [errorStateMatcher]="matcher"/>
           <mat-error *ngIf="passwordFormControl.hasError('required')">
             Password is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+            Password length of <strong>6</strong> is required
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput required placeholder="Confirm Password" name="confirmPassword" maxlength="45" type="password" [errorStateMatcher]="matcher"/>
+          <input formControlName="cpass" matInput required placeholder="Confirm Password" name="confirmPassword" maxlength="45" type="password" [errorStateMatcher]="matcher"/>
         </mat-form-field>
 
         <div fxLayout="row">
           <mat-form-field>
-            <mat-select name="skillLevel" placeholder="Skill Level" required>
-              <mat-option value="Novice">Novice</mat-option>
-              <mat-option value="Intermediate">Intermediate</mat-option>
-              <mat-option value="Advanced">Advanced</mat-option>
+            <mat-select formControlName="skill"  name="skillLevel" placeholder="Skill Level" required>
+              <mat-option value="0">Novice</mat-option>
+              <mat-option value="1">Intermediate</mat-option>
+              <mat-option value="2">Advanced</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
 
         <div fxFlex="0 0 15px"></div>
 
-        <button mat-raised-button type="submit" value="submit" mat-button [disabled]="registerForm.form.valid">Register</button>
+        <button mat-raised-button type="submit" value="submit" mat-button [disabled]="!registerFormRef.form.valid">Register</button>
       </div>
     </form>
   </div>
