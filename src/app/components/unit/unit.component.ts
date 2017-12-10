@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
 
@@ -29,6 +29,7 @@ interface unitArray {
 export class WorkshopUnitsComponent {
   private subArray: Subscription[] = [];
   public data: unitArray[] = []; 
+  private selectedUnits: string[] = [];
 
   constructor(
     private api: ApiController,
@@ -77,6 +78,32 @@ export class WorkshopUnitsComponent {
     this.subArray.push(sub);
   }
 
+  public onClickDelete() {
+    const len = this.selectedUnits.length;
+    for (let i = 0; i < len; i++) {
+      console.log('deleting: ' +  this.selectedUnits[i]);
+      const httpSub = this.api.post('/api/unit/remove', { group: this.selectedUnits[i]}).subscribe(
+        (value) => {
+          console.log(value);
+          this.getData();
+        }
+      );
+      this.subArray.push(httpSub);
+    }
+  }
+
+  public deleteEvent(event) {
+    if (event['add']) {
+      this.selectedUnits.push(event['key']);
+    } else {
+      const index = this.selectedUnits.indexOf(event['key']);
+      if (index != -1) {
+        this.selectedUnits.splice(index, 1);
+      }
+    }
+    console.log(this.selectedUnits);
+  }
+
   public ngOnDestroy() {
     handleSub(this.subArray);
   }
@@ -117,7 +144,7 @@ export class WorkshopUnitsComponent {
       <div fxFlex="0 0 16px"></div>
 
       <div fxFlex="0 0 auto" fxLayoutAlign="center center">
-        <mat-checkbox></mat-checkbox>
+        <mat-checkbox (change)="changeCheck($event)"></mat-checkbox>
       </div>
 
       <div fxFlex="1 0 10px" fxLayoutAlign="center center">
@@ -182,6 +209,10 @@ export class WorkshopUnitsComponent {
 })
 export class UnitListComponent {
   @Input() public item;
+  @Output() public deleteEvent: EventEmitter<{ key: string; add: boolean }> = new EventEmitter();
 
+  public changeCheck(event) {
+    this.deleteEvent.emit({ key: this.item['WUname'], add: event['checked'] });
+  }
   public dropDown: boolean = false;
 }

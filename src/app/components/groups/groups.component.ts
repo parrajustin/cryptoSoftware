@@ -34,7 +34,7 @@ interface guArray {
 export class WorkshopGroupsComponent implements OnInit {
   private subArray: Subscription[] = [];
   public data: groupArray[] = [];
-  private selectedGroups: groupArray[] = [];
+  private selectedGroups: string[] = [];
 
   constructor(
     private api: ApiController,
@@ -90,12 +90,11 @@ export class WorkshopGroupsComponent implements OnInit {
       console.log('deleting: ' +  this.selectedGroups[i]);
       const httpSub = this.api.post('/api/group/remove', { group: this.selectedGroups[i]}).subscribe(
         (value) => {
-          console.log(value);
+          this.getData();
         }
       );
       this.subArray.push(httpSub);
     }
-    this.getData();
   }
 
   public deleteEvent(event) {
@@ -215,7 +214,7 @@ export class WorkshopGroupsComponent implements OnInit {
 })
 export class GroupListComponent {
   private subArray: Subscription[] = [];
-  @Input() public item;
+  @Input() public item: guArray;
   @Output() public deleteEvent: EventEmitter<{ key: string; add: boolean }> = new EventEmitter();
 
   public dropDown: boolean = false;

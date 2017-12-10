@@ -72,7 +72,7 @@
         </div>
   
         <div class="tableBodyScrollViewer" fxFlex="1 0 auto" fxLayout="column">
-          <unitListItem *ngFor="let unit of data" [item]="unit"></unitListItem>
+          <unitListItem (deleteEvent)="deleteEvent($event)" *ngFor="let unit of data" [item]="unit"></unitListItem>
         </div>
   
       </div>
