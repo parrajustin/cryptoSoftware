@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="header" fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="1 0 16px"></div>
+    <span>New Server</span>
+    <div fxFlex="1 0 16px"></div>
+  </div>
+  <div class="bodyContainer">
+    <div class="body">
+      <form [formGroup]="formGroup" #formDir="ngForm" (ngSubmit)="onSubmit(FormRef)" #FormRef="ngForm">
+          <div class="body" fxLayout="column">
+            <div fxFlex="0 0 15px"></div>
+            
+            <mat-form-field>
+              <input formControlName="name" matInput required placeholder="Workshop Group Name" name="ip" maxlength="100"/>
+            </mat-form-field>
+    
+            <mat-form-field>
+              <input formControlName="description" matInput required placeholder="Workshop Description" name="user" maxlength="200"/>
+            </mat-form-field>
+    
+            <mat-form-field>
+              <input formControlName="psession" matInput required placeholder="Persistance Session" name="pass" maxlength="200"/>
+            </mat-form-field>
+            
+            <button mat-raised-button type="submit" value="submit" [disabled]="!FormRef.form.valid">Add</button>
+
+            <div fxFlex="0 0 15px"></div>
+
+            <button mat-raised-button type="button" mat-dialog-close>Cancel</button>
+    
+            <div fxFlex="0 0 15px"></div>\
+          </div>
+        </form>
+    </div>
+  </div>
+</div>

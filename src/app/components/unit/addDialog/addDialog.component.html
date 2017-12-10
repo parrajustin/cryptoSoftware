@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="header" fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="1 0 16px"></div>
+    <span>New Workshop Unit</span>
+    <div fxFlex="1 0 16px"></div>
+  </div>
+  <div class="bodyContainer">
+    <div class="body">
+      <form [formGroup]="formGroup" #formDir="ngForm" (ngSubmit)="onSubmit(FormRef)" #FormRef="ngForm">
+          <div class="body" fxLayout="column">
+            <div fxFlex="0 0 15px"></div>
+            
+            <mat-form-field>
+              <input formControlName="name" matInput required placeholder="Workshop Unit Name" name="name" maxlength="100"/>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select formControlName="host" name="host" required placeholder="Host">
+                <mat-option value="127.0.0.1">127.0.0.1</mat-option>
+                <mat-option value="192.168.1.1">192.168.1.1</mat-option>
+                <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select formControlName="vms" name="vms" required placeholder="Vms" multiple>
+                <mat-option value="a">a</mat-option>
+                <mat-option value="b">b</mat-option>
+                <!-- <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option> -->
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select formControlName="persist" name="persist" required placeholder="Persistant Session?">
+                <mat-option value="0">temporary</mat-option>
+                <mat-option value="1">persistant</mat-option>
+              </mat-select>
+            </mat-form-field>
+    
+            <mat-form-field>
+              <textarea matAutosizeMaxRows="3" formControlName="description" matInput required placeholder="Workshop Description" name="user" maxlength="280">
+              </textarea>
+            </mat-form-field>
+            
+            <button mat-raised-button type="submit" value="submit" [disabled]="!FormRef.form.valid">Add</button>
+
+            <div fxFlex="0 0 15px"></div>
+
+            <button mat-raised-button type="button" mat-dialog-close>Cancel</button>
+    
+            <div fxFlex="0 0 15px"></div>\
+          </div>
+        </form>
+    </div>
+  </div>
+</div>

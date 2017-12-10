@@ -1,6 +1,6 @@
 <div class="pageContainer" fxLayout="column" fxLayoutWrap>
     <div class="topBar" fxLayout="row">
-      <button mat-raised-button (click)="openAddServer()">+ Group</button>
+      <button mat-raised-button (click)="openAddServer()">+ Unit</button>
 
       <div fxFlex="0 0 15px"></div>
 
@@ -39,7 +39,7 @@
       <div class="tableHeader" fxFlex="0 0 60px" fxLayout='row'>
         <div fxFlex="0 0 16px"></div>
   
-        <div fxFlex="1 1 auto" fxLayoutAlign="center center">Workshop Groups</div>
+        <div fxFlex="1 1 auto" fxLayoutAlign="center center">Workshop Units</div>
   
         <div fxFlex="0 0 16px"></div>
       </div>
@@ -49,19 +49,19 @@
           <div fxFlex="0 0 16px"></div>
   
           <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
-            Workshop Group
+            Workshop Unit
           </div>
   
           <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
-            Status
-          </div>
-  
-          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
-            No. of Workshop Units
+            No. of VMs
           </div>
   
           <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
             Host
+          </div>
+  
+          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
+            Session
           </div>
   
           <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col-rightMost">
@@ -72,7 +72,7 @@
         </div>
   
         <div class="tableBodyScrollViewer" fxFlex="1 0 auto">
-          <!-- <serverListItem *ngFor="let server of servers" [item]="server"></serverListItem> -->
+          <unitListItem *ngFor="let unit of data" [item]="unit"></unitListItem>
         </div>
   
       </div>

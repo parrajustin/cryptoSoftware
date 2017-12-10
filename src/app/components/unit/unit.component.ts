@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material';
 
-import { ApiController } from '../../services';
+import { AddUnitDialogComponent } from './addDialog';
 import { handleSub } from '../../util';
-import { AddDialogComponent } from './addDialog';
+import { ApiController } from '../../services';
 
 interface dialogResponse {
   'ip': string;
@@ -12,22 +12,23 @@ interface dialogResponse {
   'pass': string;
 }
 
-interface serverArray {
-  'user_name': string;
-  'status': string;
-  'ip_address': string;
+interface unitArray {
+  'WUdescription': string;
+  'WUhost': string;
+  'WUname': string;
+  'WUpersistence_session': number;
+  'WUpublished_date': string;
+  'WUstatus': string;
 }
 
-
-
 @Component({
-  selector: 'server',
-  templateUrl: './server.component.html',
-  styleUrls: ['./server.component.less']
+  selector: 'unit',
+  templateUrl: './unit.component.html',
+  styleUrls: ['./unit.component.less']
 })
-export class ServerComponent implements OnDestroy, OnInit {
+export class WorkshopUnitsComponent {
   private subArray: Subscription[] = [];
-  public servers: serverArray[] = []; 
+  public data: unitArray[] = []; 
 
   constructor(
     private api: ApiController,
@@ -35,13 +36,13 @@ export class ServerComponent implements OnDestroy, OnInit {
   ) {}
 
   public ngOnInit() {
-    const serverSub = this.api.get('/api/server').subscribe(
+    const sub = this.api.get('/api/unit').subscribe(
       (value) => {
-        this.servers = (value) as serverArray[];
+        this.data = (value) as unitArray[];
       }
     );
 
-    this.subArray.push(serverSub);
+    this.subArray.push(sub);
   }
 
   public openAddServer() {
@@ -52,12 +53,13 @@ export class ServerComponent implements OnDestroy, OnInit {
       data: [],
       disableClose: false
     };
-    const temp: MatDialogRef<AddDialogComponent> = this.dialog.open(AddDialogComponent, config);
+    const temp: MatDialogRef<AddUnitDialogComponent> = this.dialog.open(AddUnitDialogComponent, config);
 
     const sub = temp.afterClosed().subscribe(
       (value: dialogResponse) => {
         if (typeof value == 'object') {
-          const httpSub = this.api.post('/api/server/add', value).subscribe(
+          console.log(value);
+          const httpSub = this.api.post('/api/unit/add', value).subscribe(
             (value) => {
               console.log(value);
             }
@@ -74,6 +76,7 @@ export class ServerComponent implements OnDestroy, OnInit {
     handleSub(this.subArray);
   }
 }
+
 
 //                                                        
 //                                    bbbbbbbb            
@@ -102,24 +105,42 @@ export class ServerComponent implements OnDestroy, OnInit {
 //                                                        
 
 @Component({
-  selector: 'serverListItem',
+  selector: 'unitListItem',
   template: `
   <div fxLayout="row" class="tableBodyRow">
     <div fxFlex="0 0 16px"></div>
 
-    <div fxFlex="0 0 auto" fxLayoutAlign="start center">
+    <div fxFlex="0 0 auto" fxLayoutAlign="center center">
       <mat-checkbox></mat-checkbox>
     </div>
 
-    <div fxFlex="1 1 auto" fxLayoutAlign="start center">
+    <div fxFlex="1 0 10px" fxLayoutAlign="center center">
       <div fxFlex="0 0 5px"></div>
-      {{ item['ip_address'] }}
+      {{ item['WUname'] }}
       <div fxFlex="0 0 5px"></div>
     </div>
 
-    <div fxFlex="1 1 auto" fxLayoutAlign="end center">
+    <div fxFlex="1 0 10px" fxLayoutAlign="center center">
       <div fxFlex="0 0 5px"></div>
-      {{ item['status'] }}
+      0
+      <div fxFlex="0 0 5px"></div>
+    </div>
+
+    <div fxFlex="1 0 10px" fxLayoutAlign="center center">
+      <div fxFlex="0 0 5px"></div>
+      {{ item['WUhost'] }}
+      <div fxFlex="0 0 5px"></div>
+    </div>
+
+    <div fxFlex="1 0 10px" fxLayoutAlign="center center">
+      <div fxFlex="0 0 5px"></div>
+      {{ item['WUpersistence_session'] }}
+      <div fxFlex="0 0 5px"></div>
+    </div>
+
+    <div fxFlex="1 0 10px" fxLayoutAlign="center center">
+      <div fxFlex="0 0 5px"></div>
+      {{ item['WUstatus'] }}
       <div fxFlex="0 0 5px"></div>
     </div>
 
@@ -128,6 +149,6 @@ export class ServerComponent implements OnDestroy, OnInit {
   `,
   changeDetection: ChangeDetectionStrategy.OnPush 
 })
-export class ServerListComponent {
+export class UnitListComponent {
   @Input() public item;
 }
