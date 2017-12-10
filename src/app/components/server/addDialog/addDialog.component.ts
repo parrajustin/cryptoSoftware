@@ -25,7 +25,7 @@ export class AddDialogComponent implements OnInit {
     this.serverForm = new FormGroup({
       'ip': this.ipFormControl,
       'user': new FormControl('', Validators.required),
-      'pass': new FormControl('', Validators.required),
+      'pass': new FormControl('')
     });
   }
 

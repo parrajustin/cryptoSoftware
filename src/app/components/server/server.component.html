@@ -26,7 +26,24 @@
       <div fxFlex="0 0 16px"></div>
     </div>
 
-    <div class="tableBody" fxFlex="1 0 auto">
+    <div class="tableBody" fxFlex="1 0 auto" fxLayout="column">
+      <div class="tableBodyHeader" fxLayout="row">
+        <div fxFlex="0 0 16px"></div>
+
+        <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
+          Server IP Address
+        </div>
+
+        <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col-rightMost">
+          Status
+        </div>
+
+        <div fxFlex="0 0 16px"></div>
+      </div>
+
+      <div class="tableBodyScrollViewer" fxFlex="1 0 auto">
+        <serverListItem *ngFor="let server of servers" [item]="server"></serverListItem>
+      </div>
 
     </div>
   </div>

@@ -2,7 +2,7 @@ import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatInputModule, MatSelectModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatSelectModule, MatDialogModule, MatCheckboxModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login';
 import { PageNotFoundComponent } from './components/pageNotFound';
-import { ServerComponent, AddDialogComponent } from './components/server';
+import { ServerComponent, AddDialogComponent, ServerListComponent } from './components/server';
 import { VirtualMachinesComponent } from './components/virtualmachines';
 import { WorkshopGroupsComponent } from './components/groups';
 import { WorkshopUnitsComponent } from './components/units';
@@ -39,6 +39,7 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     LoginComponent,
     ServerComponent,
+    ServerListComponent,
     WorkshopUnitsComponent,
     VirtualMachinesComponent,
     WorkshopGroupsComponent,
@@ -57,6 +58,7 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatInputModule,
     MatDialogModule,
+    MatCheckboxModule,
     MatSelectModule,
     ReactiveFormsModule,
     RouterModule.forRoot(

@@ -24,4 +24,10 @@ export class ApiController {
       headers: {'X-Access-Token': this.token}
     }).catch((error) => Observable.throw(error));
   }
+
+  public get<T>(url: string): Observable<{} | T> {
+    return this.http.get<T>(this.baseUrl + url, {
+      headers: {'X-Access-Token': this.token}
+    }).catch((error) => Observable.throw(error));
+  }
 }
