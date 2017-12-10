@@ -1,7 +1,7 @@
 <div class="container">
   <div class="header" fxLayout="row" fxLayoutAlign="center center">
     <div fxFlex="1 0 16px"></div>
-    <span>New Server</span>
+    <span>New Workshop Group</span>
     <div fxFlex="1 0 16px"></div>
   </div>
   <div class="bodyContainer">
@@ -15,11 +15,28 @@
             </mat-form-field>
     
             <mat-form-field>
-              <input formControlName="description" matInput required placeholder="Workshop Description" name="user" maxlength="200"/>
+              <textarea matAutosizeMaxRows="3" formControlName="desc" matInput required placeholder="Workshop Description" name="user" maxlength="200"></textarea>
             </mat-form-field>
+
+            <mat-form-field *ngIf="unitsLoaded">
+              <mat-select formControlName="units" name="units" required placeholder="Workshop Units" multiple>
+                <mat-option *ngFor="let unit of units" value="{{unit['WUname']}}">{{ unit['WUname'] }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div *ngIf="!unitsLoaded">
+              LOADING WORKSHOP UNITS...
+            </div>
     
             <mat-form-field>
-              <input formControlName="psession" matInput required placeholder="Persistance Session" name="pass" maxlength="200"/>
+              <input formControlName="rmat" matInput required placeholder="Reference Material Tag" name="rmat" maxlength="200"/>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select formControlName="persist" name="persist" required placeholder="Persistant Session?">
+                <mat-option value="0">temporary</mat-option>
+                <mat-option value="1">persistant</mat-option>
+              </mat-select>
             </mat-form-field>
             
             <button mat-raised-button type="submit" value="submit" [disabled]="!FormRef.form.valid">Add</button>

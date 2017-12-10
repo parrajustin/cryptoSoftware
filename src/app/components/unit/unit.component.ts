@@ -1,10 +1,10 @@
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
-import { Component, OnDestroy, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
 
-import { AddUnitDialogComponent } from './addDialog';
-import { handleSub } from '../../util';
 import { ApiController } from '../../services';
+import { handleSub } from '../../util';
+import { AddUnitDialogComponent } from './addDialog';
 
 interface dialogResponse {
   'ip': string;
@@ -49,7 +49,7 @@ export class WorkshopUnitsComponent {
     this.subArray.push(sub);
   }
 
-  public openAddServer() {
+  public openAdd() {
     const config = {
       width: `auto`,
       height: `auto`,

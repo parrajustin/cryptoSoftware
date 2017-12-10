@@ -14,7 +14,7 @@ import { LoginComponent } from './components/login';
 import { PageNotFoundComponent } from './components/pageNotFound';
 import { ServerComponent, AddDialogComponent, ServerListComponent } from './components/server';
 import { VirtualMachinesComponent } from './components/virtualmachines';
-import { WorkshopGroupsComponent, AddGroupDialogComponent } from './components/groups';
+import { WorkshopGroupsComponent, AddGroupDialogComponent, GroupListComponent } from './components/groups';
 import { WorkshopUnitsComponent, AddUnitDialogComponent, UnitListComponent } from './components/unit';
 import { IAppState, INITIAL_STATE, LogStateActions, rootReducer } from './store';
 
@@ -46,7 +46,8 @@ const appRoutes: Routes = [
     AddDialogComponent,
     AddGroupDialogComponent,
     AddUnitDialogComponent,
-    UnitListComponent
+    UnitListComponent,
+    GroupListComponent
   ],
   entryComponents: [
     AddGroupDialogComponent,

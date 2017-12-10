@@ -1,6 +1,6 @@
 <div class="pageContainer" fxLayout="column" fxLayoutWrap>
     <div class="topBar" fxLayout="row">
-      <button mat-raised-button (click)="openAddServer()">+ Group</button>
+      <button mat-raised-button (click)="openAdd()">+ Group</button>
 
       <div fxFlex="0 0 15px"></div>
 
@@ -53,10 +53,6 @@
           </div>
   
           <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
-            Status
-          </div>
-  
-          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
             No. of Workshop Units
           </div>
   
@@ -72,7 +68,7 @@
         </div>
   
         <div class="tableBodyScrollViewer" fxFlex="1 0 auto">
-          <!-- <serverListItem *ngFor="let server of servers" [item]="server"></serverListItem> -->
+            <groupListItem *ngFor="let group of data" [item]="group"></groupListItem>
         </div>
   
       </div>
