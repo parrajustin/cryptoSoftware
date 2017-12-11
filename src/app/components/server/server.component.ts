@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
 
@@ -28,6 +28,7 @@ interface serverArray {
 export class ServerComponent implements OnDestroy, OnInit {
   private subArray: Subscription[] = [];
   public servers: serverArray[] = []; 
+  private selected: string[] = [];
 
   constructor(
     private api: ApiController,
@@ -35,6 +36,10 @@ export class ServerComponent implements OnDestroy, OnInit {
   ) {}
 
   public ngOnInit() {
+    this.getData();
+  }
+
+  public getData() {
     const serverSub = this.api.get('/api/server').subscribe(
       (value) => {
         this.servers = (value) as serverArray[];
@@ -60,6 +65,7 @@ export class ServerComponent implements OnDestroy, OnInit {
           const httpSub = this.api.post('/api/server/add', value).subscribe(
             (value) => {
               console.log(value);
+              this.getData();
             }
           );
           this.subArray.push(httpSub);
@@ -68,6 +74,30 @@ export class ServerComponent implements OnDestroy, OnInit {
     );
 
     this.subArray.push(sub);
+  }
+
+  public onClickDelete() {
+    const len = this.selected.length;
+    for (let i = 0; i < len; i++) {
+      const httpSub = this.api.post('/api/server/remove', { server: this.selected[i]}).subscribe(
+        (value) => {
+          this.getData();
+        }
+      );
+      this.subArray.push(httpSub);
+    }
+  }
+
+  public deleteEvent(event) {
+    if (event['add']) {
+      this.selected.push(event['key']);
+    } else {
+      const index = this.selected.indexOf(event['key']);
+      if (index != -1) {
+        this.selected.splice(index, 1);
+      }
+    }
+    console.log(this.selected);
   }
 
   public ngOnDestroy() {
@@ -108,7 +138,7 @@ export class ServerComponent implements OnDestroy, OnInit {
     <div fxFlex="0 0 16px"></div>
 
     <div fxFlex="0 0 auto" fxLayoutAlign="start center">
-      <mat-checkbox></mat-checkbox>
+      <mat-checkbox (change)="changeCheck($event)"></mat-checkbox>
     </div>
 
     <div fxFlex="1 1 auto" fxLayoutAlign="start center">
@@ -130,4 +160,9 @@ export class ServerComponent implements OnDestroy, OnInit {
 })
 export class ServerListComponent {
   @Input() public item;
+  @Output() public deleteEvent: EventEmitter<{ key: string; add: boolean }> = new EventEmitter();
+  
+  public changeCheck(event) {
+    this.deleteEvent.emit({ key: this.item['ip_address'], add: event['checked'] });
+  }
 }

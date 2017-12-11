@@ -4,7 +4,7 @@
 
     <div fxFlex="0 0 15px"></div>
 
-    <button mat-raised-button>Delete</button>
+    <button mat-raised-button (click)="onClickDelete()">Delete</button>
 
     <div fxFlex="1 1 auto"></div>
   
@@ -44,7 +44,7 @@
       </div>
 
       <div class="tableBodyScrollViewer" fxFlex="1 0 auto">
-        <serverListItem *ngFor="let server of servers" [item]="server"></serverListItem>
+        <serverListItem (deleteEvent)="deleteEvent($event)" *ngFor="let server of servers" [item]="server"></serverListItem>
       </div>
 
     </div>
