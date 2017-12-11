@@ -1,26 +1,10 @@
 <div class="pageContainer" fxLayout="column" fxLayoutWrap>
     <div class="topBar" fxLayout="row">
-      <button mat-raised-button (click)="openAdd()">+ Unit</button>
-
-      <div fxFlex="0 0 15px"></div>
-
-      <button mat-raised-button>Import</button>
-
-      <div fxFlex="0 0 15px"></div>
-
-      <button mat-raised-button>Export</button>
+      <button mat-raised-button (click)="openAdd()">+ User</button>
 
       <div fxFlex="0 0 15px"></div>
 
       <button mat-raised-button (click)="onClickDelete()">Delete</button>
-
-      <div fxFlex="0 0 15px"></div>
-
-      <button mat-raised-button>Restore</button>
-
-      <div fxFlex="0 0 15px"></div>
-
-      <button mat-raised-button>Clone</button>
   
       <div fxFlex="1 1 auto"></div>
   
@@ -39,7 +23,7 @@
       <div class="tableHeader" fxFlex="0 0 60px" fxLayout='row'>
         <div fxFlex="0 0 16px"></div>
   
-        <div fxFlex="1 1 auto" fxLayoutAlign="center center">Workshop Units</div>
+        <div fxFlex="1 1 auto" fxLayoutAlign="center center">User Profiles</div>
   
         <div fxFlex="0 0 16px"></div>
       </div>
@@ -49,30 +33,22 @@
           <div fxFlex="0 0 16px"></div>
   
           <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
-            Workshop Unit
+            First Name
           </div>
   
           <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
-            No. of VMs
-          </div>
-  
-          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
-            Host
-          </div>
-  
-          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
-            Session
+            Last Name
           </div>
   
           <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col-rightMost">
-            Status
+            Organization
           </div>
   
           <div fxFlex="0 0 16px"></div>
         </div>
   
-        <div class="tableBodyScrollViewer" fxFlex="1 0 auto" fxLayout="column">
-          <unitListItem (deleteEvent)="deleteEvent($event)" *ngFor="let unit of data" [item]="unit"></unitListItem>
+        <div class="tableBodyScrollViewer" fxFlex="1 0 auto">
+            <userListItem (deleteEvent)="deleteEvent($event)" *ngFor="let user of data" [item]="user"></userListItem>
         </div>
   
       </div>

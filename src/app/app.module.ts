@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './components/pageNotFound';
 import { ServerComponent, AddDialogComponent, ServerListComponent } from './components/server';
 import { VirtualMachinesComponent } from './components/virtualmachines';
 import { WorkshopGroupsComponent, AddGroupDialogComponent, GroupListComponent } from './components/groups';
+import { UsersComponent, UserListComponent, AddUserDialogComponent } from './components/users';
 import { WorkshopUnitsComponent, AddUnitDialogComponent, UnitListComponent } from './components/unit';
 import { IAppState, INITIAL_STATE, LogStateActions, rootReducer } from './store';
 
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
   { path: 'units', component: WorkshopUnitsComponent, canActivate: [AdminGuard] },
   { path: 'server', component: ServerComponent, canActivate: [AdminGuard] },
   { path: 'stat', component: ServerComponent, canActivate: [AdminGuard] },
+  { path: 'users', component: UsersComponent, canActivate: [AdminGuard] },
   { path: '*', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
@@ -47,12 +49,16 @@ const appRoutes: Routes = [
     AddGroupDialogComponent,
     AddUnitDialogComponent,
     UnitListComponent,
-    GroupListComponent
+    GroupListComponent,
+    UsersComponent,
+    UserListComponent,
+    AddUserDialogComponent
   ],
   entryComponents: [
     AddGroupDialogComponent,
     AddDialogComponent,
-    AddUnitDialogComponent
+    AddUnitDialogComponent,
+    AddUserDialogComponent
   ],
   imports: [
     BrowserModule,

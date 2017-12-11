@@ -38,6 +38,12 @@
         <div fxFlex="1 1 auto" fxLayoutAlign="center center">Statistics</div>
         <div fxFlex="0 0 16px"></div>
       </div>
+
+      <div class="sideBarMenuItem" fxFlex="0 0 35px" fxLayout="row" [ngStyle]="{'background-color': url === '/users'? 'lightblue': ''}">
+        <div fxFlex="0 0 16px"></div>
+        <a [routerLink]="['/users']"><div fxFlex="1 1 auto" fxLayoutAlign="center center">Users</div></a>
+        <div fxFlex="0 0 16px"></div>
+      </div>
     </div>
 
     <div id="routerContainer" fxFlex="1 1 auto">

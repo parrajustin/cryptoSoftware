@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs/Rx';
 
 import { ApiController } from '../../services';
 import { handleSub } from '../../util';
-import { AddUnitDialogComponent } from './addDialog';
+import { AddUserDialogComponent } from './addDialog';
 
 interface dialogResponse {
   'ip': string;
@@ -12,24 +12,24 @@ interface dialogResponse {
   'pass': string;
 }
 
-interface unitArray {
-  'WUdescription': string;
-  'WUhost': string;
-  'WUname': string;
-  'WUpersistence_session': number;
-  'WUpublished_date': string;
-  'WUstatus': string;
+interface user {
+  'email': string;
+  'first_name': string;
+  'last_name': string;
+  'organization': string;
+  'skill_level': number;
+  'is_admin': boolean;
 }
 
 @Component({
-  selector: 'unit',
-  templateUrl: './unit.component.html',
-  styleUrls: ['./unit.component.less']
+  selector: 'users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.less']
 })
-export class WorkshopUnitsComponent {
+export class UsersComponent implements OnInit {
   private subArray: Subscription[] = [];
-  public data: unitArray[] = []; 
-  private selectedUnits: string[] = [];
+  public data: user[] = [];
+  private selected: string[] = [];
 
   constructor(
     private api: ApiController,
@@ -41,9 +41,10 @@ export class WorkshopUnitsComponent {
   }
 
   public getData() {
-    const sub = this.api.get('/api/unit').subscribe(
+    const sub = this.api.get('/api/user').subscribe(
       (value) => {
-        this.data = (value) as unitArray[];
+        console.log(value);
+        this.data = (value) as user[];
       }
     );
 
@@ -58,15 +59,13 @@ export class WorkshopUnitsComponent {
       data: [],
       disableClose: false
     };
-    const temp: MatDialogRef<AddUnitDialogComponent> = this.dialog.open(AddUnitDialogComponent, config);
+    const temp: MatDialogRef<AddUserDialogComponent> = this.dialog.open(AddUserDialogComponent, config);
 
     const sub = temp.afterClosed().subscribe(
       (value: dialogResponse) => {
         if (typeof value == 'object') {
-          console.log(value);
-          const httpSub = this.api.post('/api/unit/add', value).subscribe(
+          const httpSub = this.api.post('/api/user/register', value).subscribe(
             (value) => {
-              console.log(value);
               this.getData();
             }
           );
@@ -79,12 +78,10 @@ export class WorkshopUnitsComponent {
   }
 
   public onClickDelete() {
-    const len = this.selectedUnits.length;
+    const len = this.selected.length;
     for (let i = 0; i < len; i++) {
-      console.log('deleting: ' +  this.selectedUnits[i]);
-      const httpSub = this.api.post('/api/unit/remove', { unit: this.selectedUnits[i]}).subscribe(
+      const httpSub = this.api.post('/api/user/remove', { user: this.selected[i]}).subscribe(
         (value) => {
-          console.log(value);
           this.getData();
         }
       );
@@ -94,14 +91,13 @@ export class WorkshopUnitsComponent {
 
   public deleteEvent(event) {
     if (event['add']) {
-      this.selectedUnits.push(event['key']);
+      this.selected.push(event['key']);
     } else {
-      const index = this.selectedUnits.indexOf(event['key']);
+      const index = this.selected.indexOf(event['key']);
       if (index != -1) {
-        this.selectedUnits.splice(index, 1);
+        this.selected.splice(index, 1);
       }
     }
-    console.log(this.selectedUnits);
   }
 
   public ngOnDestroy() {
@@ -137,7 +133,7 @@ export class WorkshopUnitsComponent {
 //                                                        
 
 @Component({
-  selector: 'unitListItem',
+  selector: 'userListItem',
   template: `
   <div fxLayout="column">
     <div fxLayout="row" class="tableBodyRow">
@@ -153,32 +149,20 @@ export class WorkshopUnitsComponent {
           <button mat-icon-button (click)="dropDown = true;" *ngIf="!dropDown"><mat-icon>arrow_drop_down</mat-icon></button>
           <button mat-icon-button (click)="dropDown = false;" *ngIf="dropDown"><mat-icon>arrow_drop_up</mat-icon></button>
 
-          <div fxFlex="1 1 auto" fxLayoutAlign="center center">{{ item['WUname'] }}</div>
+          <div fxFlex="1 1 auto" fxLayoutAlign="center center">{{ item['first_name'] }}</div>
         </div>
         <div fxFlex="0 0 5px"></div>
       </div>
 
       <div fxFlex="1 0 10px" fxLayoutAlign="center center">
         <div fxFlex="0 0 5px"></div>
-        0
+        {{ item['last_name'] }}
         <div fxFlex="0 0 5px"></div>
       </div>
 
       <div fxFlex="1 0 10px" fxLayoutAlign="center center">
         <div fxFlex="0 0 5px"></div>
-        {{ item['WUhost'] }}
-        <div fxFlex="0 0 5px"></div>
-      </div>
-
-      <div fxFlex="1 0 10px" fxLayoutAlign="center center">
-        <div fxFlex="0 0 5px"></div>
-        {{ item['WUpersistence_session'] }}
-        <div fxFlex="0 0 5px"></div>
-      </div>
-
-      <div fxFlex="1 0 10px" fxLayoutAlign="center center">
-        <div fxFlex="0 0 5px"></div>
-        {{ item['WUstatus'] }}
+        {{ item['organization'] }}
         <div fxFlex="0 0 5px"></div>
       </div>
 
@@ -189,7 +173,7 @@ export class WorkshopUnitsComponent {
 
       <div fxLayout="row" fxFlex="0 0 auto">
         <div fxFlex="0 0 16px"></div>
-        Description: {{ item['WUdescription'] }}
+        Email Address: {{ item['email'] }}
         <div fxFlex="0 0 16px"></div>
       </div>
 
@@ -197,22 +181,30 @@ export class WorkshopUnitsComponent {
 
       <div fxLayout="row" fxFlex="0 0 auto">
         <div fxFlex="0 0 16px"></div>
-        Virtual Machines:
+        Skill Level: {{ item['skill_level'] }}
+        <div fxFlex="0 0 16px"></div>
+      </div>
+
+      <div fxFlex="0 0 15px"></div>
+
+      <div fxLayout="row" fxFlex="0 0 auto">
+        <div fxFlex="0 0 16px"></div>
+        Is an Admin: {{ item['is_admin'] }}
         <div fxFlex="0 0 16px"></div>
       </div>
 
       <div fxFlex="0 0 5px"></div>
     </div>
   </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush 
+  `
 })
-export class UnitListComponent {
-  @Input() public item;
+export class UserListComponent {
+  @Input() public item: user;
   @Output() public deleteEvent: EventEmitter<{ key: string; add: boolean }> = new EventEmitter();
 
-  public changeCheck(event) {
-    this.deleteEvent.emit({ key: this.item['WUname'], add: event['checked'] });
-  }
   public dropDown: boolean = false;
+
+  public changeCheck(event) {
+    this.deleteEvent.emit({ key: this.item.email, add: event['checked'] });
+  }
 }
