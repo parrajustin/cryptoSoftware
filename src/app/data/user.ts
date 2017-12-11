@@ -79,6 +79,9 @@ export class Administrator extends User {
         //This function will delete a user
         this.dBase.deleteUser(userID);
     }
+    private createWorkshopGroup(gName:string, gID:number){
+        
+    }
 }
 
 
