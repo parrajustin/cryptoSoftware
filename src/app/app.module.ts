@@ -17,6 +17,8 @@ import { VirtualMachinesComponent } from './components/virtualmachines';
 import { WorkshopGroupsComponent, AddGroupDialogComponent, GroupListComponent } from './components/groups';
 import { UsersComponent, UserListComponent, AddUserDialogComponent } from './components/users';
 import { WorkshopUnitsComponent, AddUnitDialogComponent, UnitListComponent } from './components/unit';
+import { TemporaryComponent, WorkshopListComponent } from './components/temporary';
+import { PersistantComponent } from './components/persistant';
 import { IAppState, INITIAL_STATE, LogStateActions, rootReducer } from './store';
 
 //guard
@@ -31,6 +33,8 @@ const appRoutes: Routes = [
   { path: 'server', component: ServerComponent, canActivate: [AdminGuard] },
   { path: 'stat', component: ServerComponent, canActivate: [AdminGuard] },
   { path: 'users', component: UsersComponent, canActivate: [AdminGuard] },
+  { path: 'temp', component: TemporaryComponent },
+  { path: 'persistant', component: PersistantComponent },
   { path: '*', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
@@ -52,7 +56,10 @@ const appRoutes: Routes = [
     GroupListComponent,
     UsersComponent,
     UserListComponent,
-    AddUserDialogComponent
+    AddUserDialogComponent,
+    TemporaryComponent,
+    WorkshopListComponent,
+    PersistantComponent
   ],
   entryComponents: [
     AddGroupDialogComponent,

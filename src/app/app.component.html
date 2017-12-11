@@ -8,6 +8,19 @@
   </div>
 
   <div id="appBody" fxLayout="row" fxFlex="1 1 auto">
+    <div id="appSideBar" fxLayout="column" fxFlex="0 0 150px" *ngIf="loggedIn != 3 && loggedIn != 0">
+      <div class="sideBarMenuItem" fxFlex="0 0 35px" fxLayout="row" [ngStyle]="{'background-color': url === '/temp'? 'lightblue': ''}">
+        <div fxFlex="0 0 16px"></div>
+        <a [routerLink]="['/temp']"><div fxFlex="1 1 auto" fxLayoutAlign="center center">Temporary Workshop</div></a>
+        <div fxFlex="0 0 16px"></div>
+      </div>
+
+      <div class="sideBarMenuItem" fxFlex="0 0 35px" fxLayout="row" [ngStyle]="{'background-color': url === '/persistant'? 'lightblue': ''}">
+        <div fxFlex="0 0 16px"></div>
+        <a [routerLink]="['/persistant']"><div fxFlex="1 1 auto" fxLayoutAlign="center center">Persistant Workshop</div></a>
+        <div fxFlex="0 0 16px"></div>
+      </div>
+    </div>
     <div id="appSideBar" fxLayout="column" fxFlex="0 0 150px" *ngIf="loggedIn == 3">
       <div class="sideBarMenuItem" fxFlex="0 0 35px" fxLayout="row" [ngStyle]="{'background-color': url === '/server'? 'lightblue': ''}">
         <div fxFlex="0 0 16px"></div>

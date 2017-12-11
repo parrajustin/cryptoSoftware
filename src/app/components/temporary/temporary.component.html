@@ -1,0 +1,60 @@
+<div class="pageContainer" fxLayout="column" fxLayoutWrap>
+    <div class="topBar" fxLayout="row">
+      <div fxFlex="0 0 auto">Skill Level: </div>
+      
+      <div fxFlex="0 0 15px"></div>
+      
+      <mat-select name="skillLevel" placeholder="Skill Level" value="0" required>
+        <mat-option value="0">Novice</mat-option>
+        <mat-option value="1">Intermediate</mat-option>
+        <mat-option value="2">Advanced</mat-option>
+      </mat-select>
+  
+      <div fxFlex="1 1 auto"></div>
+  
+      <div fxFlex="0 0 auto" fxLayoutAlign="center center">
+          <span>Search: </span>
+      </div>
+  
+      <div fxFlex="0 0 10px"></div>
+  
+      <input name="search" type="text" />
+    </div>
+  
+    <div fxFlex="0 0 15px"></div>
+  
+    <div class="tableBox" fxFlex="1 1 auto" fxLayout="column">
+      <div class="tableHeader" fxFlex="0 0 60px" fxLayout='row'>
+        <div fxFlex="0 0 16px"></div>
+  
+        <div fxFlex="1 1 auto" fxLayoutAlign="center center">Temporary Workshops</div>
+  
+        <div fxFlex="0 0 16px"></div>
+      </div>
+  
+      <div class="tableBody" fxFlex="1 0 auto" fxLayout="column">
+        <div class="tableBodyHeader" fxLayout="row">
+          <div fxFlex="0 0 16px"></div>
+  
+          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
+            Workshop Title
+          </div>
+  
+          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
+            No. of Available Sessions
+          </div>
+  
+          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col-rightMost">
+            Published Date
+          </div>
+  
+          <div fxFlex="0 0 16px"></div>
+        </div>
+  
+        <div class="tableBodyScrollViewer" fxFlex="1 0 auto">
+          <tempWorkshopListItem *ngFor="let group of data" [item]="group"></tempWorkshopListItem>
+        </div>
+  
+      </div>
+    </div>
+  </div>

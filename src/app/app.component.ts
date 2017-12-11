@@ -30,6 +30,8 @@ export class AppComponent implements OnDestroy {
       let url = "";
       switch (this.loggedIn) {
         case LoginState.guest:
+        case LoginState.registered:
+          url = "/temp";
           break;
         case LoginState.admin:
           url = "/server";

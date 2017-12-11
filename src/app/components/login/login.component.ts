@@ -146,8 +146,14 @@ export class LoginComponent implements OnInit {
     this.api.post<LoginResponse>(`/api/user/login`, this.login)
       .subscribe((response: LoginResponse) => {
         if (response.success) {
+          console.log(response);
           this.ngRedux.dispatch(this.actions.setToken(response.token));
-          this.ngRedux.dispatch(this.actions.adminLogin());
+          
+          if (response.isAdmin) {
+            this.ngRedux.dispatch(this.actions.adminLogin());
+          } else {
+            this.ngRedux.dispatch(this.actions.registeredLogin());
+          }
         } else {
           alert(response.reason);
         }
