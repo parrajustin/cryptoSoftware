@@ -18,8 +18,10 @@ import { WorkshopGroupsComponent, AddGroupDialogComponent, GroupListComponent } 
 import { UsersComponent, UserListComponent, AddUserDialogComponent } from './components/users';
 import { WorkshopUnitsComponent, AddUnitDialogComponent, UnitListComponent } from './components/unit';
 import { TemporaryComponent, WorkshopListComponent } from './components/temporary';
-import { PersistantComponent } from './components/persistant';
+import { PersistantComponent, WorkshopPListComponent } from './components/persistant';
 import { DialogComponent } from './components/dialog';
+import { WorkshopDialogComponent } from './components/workshopDetailed';
+import { MenuComponent } from './components/menu';
 import { IAppState, INITIAL_STATE, LogStateActions, rootReducer } from './store';
 
 //guard
@@ -63,7 +65,10 @@ const appRoutes: Routes = [
     PersistantComponent,
     VMListComponent,
     CloneDialogComponent,
-    DialogComponent
+    DialogComponent,
+    WorkshopPListComponent,
+    WorkshopDialogComponent,
+    MenuComponent
   ],
   entryComponents: [
     AddGroupDialogComponent,
@@ -71,7 +76,9 @@ const appRoutes: Routes = [
     AddUnitDialogComponent,
     AddUserDialogComponent,
     CloneDialogComponent,
-    DialogComponent
+    DialogComponent,
+    WorkshopDialogComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

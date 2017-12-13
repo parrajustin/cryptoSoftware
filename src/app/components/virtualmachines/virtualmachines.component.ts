@@ -55,15 +55,16 @@ export class VirtualMachinesComponent {
 
     const sub = temp.afterClosed().subscribe(
       (value) => {
-        console.log(value);
-        // if (typeof value == 'object') {
-        //   const httpSub = this.api.post('/api/user/register', value).subscribe(
-        //     (value) => {
-        //       this.getData();
-        //     }
-        //   );
-        //   this.subArray.push(httpSub);
-        // }
+        if (value.length > 0) {
+          console.log(value);
+          const httpSub = this.api.post('/api/vm/clone', value).subscribe(
+            (value) => {
+              console.log(value);
+              // this.getData();
+            }
+          );
+          this.subArray.push(httpSub);
+        }
       }
     );
 

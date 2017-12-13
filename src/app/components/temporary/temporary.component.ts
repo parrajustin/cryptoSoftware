@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { ApiController } from '../../services';
 import { handleSub, pad } from '../../util';
+import { WorkshopDialogComponent } from '../workshopDetailed';
 
 interface dialogResponse {
   'ip': string;
@@ -37,7 +38,6 @@ export class TemporaryComponent implements OnInit {
 
   constructor(
     private api: ApiController,
-    private dialog: MatDialog,
   ) {}
 
   public ngOnInit() {
@@ -99,7 +99,7 @@ export class TemporaryComponent implements OnInit {
           <button mat-icon-button (click)="dropDown = true;" *ngIf="!dropDown"><mat-icon>arrow_drop_down</mat-icon></button>
           <button mat-icon-button (click)="dropDown = false;" *ngIf="dropDown"><mat-icon>arrow_drop_up</mat-icon></button>
 
-          <div fxFlex="1 1 auto" fxLayoutAlign="center center">{{ item['WUname'] }}</div>
+          <div fxFlex="1 1 auto" fxLayoutAlign="center center"><div style="text-decoration: underline; color: blue; cursor: pointer;" (click)="clickDetailed()">{{ item['WUname'] }}</div></div>
         </div>
         <div fxFlex="0 0 5px"></div>
       </div>
@@ -150,8 +150,31 @@ export class WorkshopListComponent {
   public dropDown: boolean = false;
 
   constructor(
+    private dialog: MatDialog,
     private api: ApiController
   ) {}
+
+  public clickDetailed() {
+    const config = {
+      width: `auto`,
+      height: `auto`,
+      panelClass: 'u-remove-padding-dialog',
+      data: { 'data': this._item, 'persist': false },
+      disableClose: false
+    };
+    const temp: MatDialogRef<WorkshopDialogComponent> = this.dialog.open(WorkshopDialogComponent, config);
+
+    const sub = temp.afterClosed().subscribe(
+      (value: dialogResponse) => {
+        if (typeof value == 'string' && value === 'yes') {
+
+          console.log(value);
+        }
+      }
+    );
+
+    this.subArray.push(sub);
+  }
 
   public ngOnInit() {
     // this.getData();

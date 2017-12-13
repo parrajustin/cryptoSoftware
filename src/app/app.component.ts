@@ -2,10 +2,12 @@ import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { NgRedux } from '@angular-redux/store';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { LogStateActions, IAppState } from './store';
 import { LoginState } from './models';
 import { handleSub } from './util';
+import { MenuComponent } from './components/menu';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +17,23 @@ import { handleSub } from './util';
 export class AppComponent implements OnDestroy {
   public loggedIn: LoginState = LoginState.notLoggedIn;
   public url: String = '';
+  public name: string = '';
 
   private subArray: Subscription[] = [];
 
   constructor(
     public router: Router,
+    private dialog: MatDialog,
     private ngRedux: NgRedux<IAppState>,
     private actions: LogStateActions
   ) {
+    const nameSub = ngRedux.select('name').subscribe(
+      state => {
+        console.log(state);
+        this.name = <any> state;
+      }
+    );
+
     const loggedInSub = ngRedux.select<LoginState>('loginState')
     .subscribe(state => {
       this.loggedIn = state;
@@ -52,7 +63,7 @@ export class AppComponent implements OnDestroy {
       }
     )
 
-    this.subArray.push(loggedInSub, routerSub);
+    this.subArray.push(loggedInSub, routerSub, nameSub);
   }
 
   ngOnDestroy() {
@@ -84,6 +95,32 @@ export class AppComponent implements OnDestroy {
   //                                                                                                                        
   //                                                                                                                        
   //    
+
+  public clickMenu() {
+    const config = {
+      width: `auto`,
+      height: `auto`,
+      panelClass: 'u-remove-padding-dialog',
+      data: this.loggedIn === LoginState.admin,
+      disableClose: false
+    };
+    const temp: MatDialogRef<MenuComponent> = this.dialog.open(MenuComponent, config);
+
+    const sub = temp.afterClosed().subscribe(
+      (value) => {
+        if (typeof value == 'string') {
+          this.ngRedux.dispatch(this.actions.logout());
+          this.router.navigateByUrl("/").catch(
+            (reason: any) => {
+              throw new Error(reason);
+            }
+          );
+        }
+      }
+    );
+
+    this.subArray.push(sub);
+  }
 
   public clickServer() {
     this.router.navigateByUrl('/server').catch(

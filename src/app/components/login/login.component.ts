@@ -147,7 +147,8 @@ export class LoginComponent implements OnInit {
       .subscribe((response: LoginResponse) => {
         if (response.success) {
           console.log(response);
-          this.ngRedux.dispatch(this.actions.setToken(response.token));
+          this.ngRedux.dispatch(this.actions.setToken({ token: response.token, name: response.fname + " " + response.lname }));
+          // { 'token: response.token, 'name': ''}
           
           if (response.isAdmin) {
             this.ngRedux.dispatch(this.actions.adminLogin());
@@ -175,7 +176,7 @@ export class LoginComponent implements OnInit {
       .subscribe((response: RegisterResponse) => {
         if (response.success) {
           console.log(response);
-          this.ngRedux.dispatch(this.actions.setToken(response.token));
+          this.ngRedux.dispatch(this.actions.setToken({ token: response.token, name: this.register.fname + " " + this.register.lname }));
           this.ngRedux.dispatch(this.actions.registeredLogin());
         } else {
           alert(response.reason);

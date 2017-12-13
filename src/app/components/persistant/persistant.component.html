@@ -36,23 +36,27 @@
         <div class="tableBodyHeader" fxLayout="row">
           <div fxFlex="0 0 16px"></div>
   
-          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
+          <div fxFlex="1 0 10px" fxLayoutAlign="center center" class="u-col">
             Workshop Title
           </div>
   
-          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col">
+          <div fxFlex="1 0 10px" fxLayoutAlign="center center" class="u-col">
             No. of Available Sessions
           </div>
-  
-          <div fxFlex="1 1 auto" fxLayoutAlign="center center" class="u-col-rightMost">
+
+          <div fxFlex="1 0 10px" fxLayoutAlign="center center" class="u-col">
             Published Date
+          </div>
+  
+          <div fxFlex="1 0 10px" fxLayoutAlign="center center" class="u-col-rightMost">
+            Persistance Session Lifetime
           </div>
   
           <div fxFlex="0 0 16px"></div>
         </div>
   
         <div class="tableBodyScrollViewer" fxFlex="1 0 auto">
-          <tempWorkshopListItem *ngFor="let group of data" [item]="group"></tempWorkshopListItem>
+          <persitWorkshopListItem *ngFor="let group of data" [item]="group"></persitWorkshopListItem>
         </div>
   
       </div>

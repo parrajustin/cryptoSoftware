@@ -29,7 +29,7 @@ export class LogStateActions {
     return { type: LogStateActions.LOGINGUEST };
   }
 
-  setToken(token: string): ActionPayload {
+  setToken(token: {token: string; name: string;}): ActionPayload {
     return { type: LogStateActions.SETTOKEN, payload: token };
   }
 }

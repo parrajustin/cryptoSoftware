@@ -4,6 +4,12 @@
 
     <div fxLayoutAlign="start center">UTEP & ARL</div>
 
+    <div fxFlex="1 0 1px"></div>
+
+    <div fxFlex="0 0 auto" style="color: black; font-size: 12px;" fxLayoutAlign="end center" *ngIf="loggedIn != 0">
+      <span style="background-color: grey; color: white; padding: 15px 15px; cursor: pointer;" (click)="clickMenu()">Logged in: {{ name }}</span>
+    </div>
+
     <div fxFlex="0 0 16px"></div>
   </div>
 

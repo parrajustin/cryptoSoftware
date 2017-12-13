@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="header" fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="1 0 16px"></div>
+    <span>Workshop Detailed View</span>
+    <div fxFlex="1 0 16px"></div>
+  </div>
+  <div class="bodyContainer">
+    <div class="body" fxLayout="column">
+      <div fxFlex="0 0 15px"></div> 
+
+      <div fxLayout="row">
+        Workshop Title: 
+        <div fxFlex="0 0 5px"></div>
+        <b>{{ item['WUname'] }}</b>
+      </div>
+
+      <div fxFlex="0 0 5px"></div>
+
+      <div fxLayout="row">
+        Description: 
+        <div fxFlex="0 0 5px"></div>
+        <b>{{ item['WUdescription'] }}</b>
+      </div>
+
+      <div fxFlex="0 0 5px"></div>
+
+      <div fxLayout="row">
+        Reference Material:
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center">
+        Survey: 
+        <div fxFlex="0 0 5px"></div>
+        NO SURVEY
+        <div fxFlex="0 0 5px"></div>
+        <input type="file" placeholder="completed survey"/>
+        <div fxFlex="0 0 5px"></div>
+        <button mat-raised-button>Submit</button>
+      </div>
+
+      <div fxFlex="0 0 5px"></div>
+
+      <div fxLayout="row" class="connection" *ngIf="isPersist">
+        Persistence Session
+
+        <div fxFlex="0 0 5px"></div>
+
+        <div class="text">Session X</div>
+
+        <div fxFlex="0 0 5px"></div>
+
+        OR
+
+        <div fxFlex="0 0 5px"></div>
+
+        <div class="text">Start Over</div>
+      </div>
+
+      <div fxLayout="column" class="connection" *ngIf="!isPersist">
+        <div fxLayout="row">
+          Connection String Type
+
+          <div fxFlex="0 0 5px"></div>
+
+          <button mat-raised-button>R-Desktop</button>
+
+          <div fxFlex="0 0 5px"></div>
+
+          <button mat-raised-button>Remote Desktop</button>
+
+          <div fxFlex="0 0 5px"></div>
+
+          <button mat-raised-button>VPN</button>
+        </div>
+
+        <div fxFlex="0 0 5px"></div>
+        
+        <div fxLayout="row">
+          Avaliable Sessions:
+        </div>
+
+        <div fxFlex="0 0 5px"></div>
+        
+        <div fxLayout="row">
+          Session End Date:
+        </div>
+      </div>
+
+      <div fxFlex="0 0 15px"></div> 
+    </div>
+  </div>
+</div>
