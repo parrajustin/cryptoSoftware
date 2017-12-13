@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="header" fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="1 0 16px"></div>
+    <span>Clone</span>
+    <div fxFlex="1 0 16px"></div>
+  </div>
+  <div class="bodyContainer">
+    <div class="body">
+      <form [formGroup]="formGroup" #formDir="ngForm" (ngSubmit)="onSubmit(FormRef)" #FormRef="ngForm">
+        <div class="body" fxLayout="column">
+
+          Cloning Dialog {{ current + 1 }} out of {{ len }}
+
+          <div fxFlex="0 0 15px"></div>
+
+          Selected VM: {{ selected }}
+
+          <div fxFlex="0 0 15px"></div>
+          
+          <mat-form-field>
+            <input formControlName="no" matInput required placeholder="No. of Clones" name="no" maxlength="100" type="number" [errorStateMatcher]="matcher"/>
+          </mat-form-field>
+        
+          <mat-form-field>
+            <input formControlName="seed" matInput required placeholder="VRDP Seed" name="seed" maxlength="100" type="number" [errorStateMatcher]="matcher"/>
+          </mat-form-field>
+        
+          <mat-form-field>
+            <input formControlName="nat" matInput required placeholder="Network Adapter Name" name="name" maxlength="100" [errorStateMatcher]="matcher"/>
+          </mat-form-field>
+        
+          <mat-form-field>
+            <input formControlName="nseed" matInput required placeholder="Network Adapter Speed" name="nseed" maxlength="100" type="number" [errorStateMatcher]="matcher"/>
+          </mat-form-field>
+        
+          <button mat-raised-button type="submit" value="submit" [disabled]="!FormRef.form.valid">Add</button>
+
+          <div fxFlex="0 0 15px"></div>
+
+          <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+  
+          <div fxFlex="0 0 15px"></div>
+        </div>
+      </form>
+
+      <div>
+
+      </div>
+    </div>
+  </div>
+</div>

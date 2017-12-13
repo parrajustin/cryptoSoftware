@@ -13,12 +13,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login';
 import { PageNotFoundComponent } from './components/pageNotFound';
 import { ServerComponent, AddDialogComponent, ServerListComponent } from './components/server';
-import { VirtualMachinesComponent } from './components/virtualmachines';
+import { VirtualMachinesComponent, VMListComponent, CloneDialogComponent } from './components/virtualmachines';
 import { WorkshopGroupsComponent, AddGroupDialogComponent, GroupListComponent } from './components/groups';
 import { UsersComponent, UserListComponent, AddUserDialogComponent } from './components/users';
 import { WorkshopUnitsComponent, AddUnitDialogComponent, UnitListComponent } from './components/unit';
 import { TemporaryComponent, WorkshopListComponent } from './components/temporary';
 import { PersistantComponent } from './components/persistant';
+import { DialogComponent } from './components/dialog';
 import { IAppState, INITIAL_STATE, LogStateActions, rootReducer } from './store';
 
 //guard
@@ -59,13 +60,18 @@ const appRoutes: Routes = [
     AddUserDialogComponent,
     TemporaryComponent,
     WorkshopListComponent,
-    PersistantComponent
+    PersistantComponent,
+    VMListComponent,
+    CloneDialogComponent,
+    DialogComponent
   ],
   entryComponents: [
     AddGroupDialogComponent,
     AddDialogComponent,
     AddUnitDialogComponent,
-    AddUserDialogComponent
+    AddUserDialogComponent,
+    CloneDialogComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,

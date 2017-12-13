@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 import { ApiController } from '../../services';
 import { handleSub } from '../../util';
 import { AddUnitDialogComponent } from './addDialog';
+import { DialogComponent } from '../dialog';
 
 interface dialogResponse {
   'ip': string;
@@ -79,17 +80,38 @@ export class WorkshopUnitsComponent {
   }
 
   public onClickDelete() {
-    const len = this.selectedUnits.length;
-    for (let i = 0; i < len; i++) {
-      console.log('deleting: ' +  this.selectedUnits[i]);
-      const httpSub = this.api.post('/api/unit/remove', { unit: this.selectedUnits[i]}).subscribe(
-        (value) => {
-          console.log(value);
-          this.getData();
-        }
-      );
-      this.subArray.push(httpSub);
+    if (this.selectedUnits.length == 0) {
+      return;
     }
+    
+    const config = {
+      width: `auto`,
+      height: `auto`,
+      panelClass: 'u-remove-padding-dialog',
+      data: { 'options': ['yes', 'no'], 'message': 'Are you sure you want to delete these users?'},
+      disableClose: true
+    };
+    const temp: MatDialogRef<DialogComponent> = this.dialog.open(DialogComponent, config);
+
+    const sub = temp.afterClosed().subscribe(
+      (value: dialogResponse) => {
+        if (typeof value == 'string' && value === 'yes') {
+          const len = this.selectedUnits.length;
+          for (let i = 0; i < len; i++) {
+            console.log('deleting: ' +  this.selectedUnits[i]);
+            const httpSub = this.api.post('/api/unit/remove', { unit: this.selectedUnits[i]}).subscribe(
+              (value) => {
+                console.log(value);
+                this.getData();
+              }
+            );
+            this.subArray.push(httpSub);
+          }
+        }
+      }
+    );
+
+    this.subArray.push(sub);
   }
 
   public deleteEvent(event) {

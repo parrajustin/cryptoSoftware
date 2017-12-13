@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="header" fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex="1 0 16px"></div>
+    <span>Clone</span>
+    <div fxFlex="1 0 16px"></div>
+  </div>
+  <div class="bodyContainer">
+    <div class="body" fxLayout="column">
+      <div fxLayout="row" class="message">
+        {{ message }}
+      </div>
+
+      <div fxLayout="row">
+        <div fxFlex="0 0 5px"></div> 
+
+        <div fxFlex="1 0 10px" *ngFor="let option of options">
+          <button mat-raised-button (click)="clickButton( option )" style="width: 100%;">
+            {{ option }}
+          </button>
+
+          <div fxFlex="0 0 5px"></div> 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
