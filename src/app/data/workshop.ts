@@ -37,6 +37,23 @@ export class WorkshopUnit {
     constructor(
     ) { }
 
+    public createWorkshop(workshopName: string, description: string, host: string, persistantSession: obj): boolean {
+        if (workshopName.length < 0 || workshopName > 100) {
+            return false;
+        }
+
+        if (description.length < 0 || description > 500) {
+            return false;
+        }
+
+        if (!validIp(host)) {
+            return false;
+        }
+
+        this.Database.createWorkshop(workshopName, description, host, persistantSession);
+        return true;
+    }
+
     public participateTempoaryWorkshop(userType, connectionType): null | ConnectionString {
 
         // first check if the workshop is temporary or not
