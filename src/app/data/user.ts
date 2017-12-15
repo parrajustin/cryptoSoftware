@@ -14,8 +14,13 @@ export class User {
         this.userID = options.userID;
     }
 
-    private setFirstName(name: string) {
+    public setFirstName(name: string): boolean {
+        if (name.length > 255 || name.length < 0) {
+            return false;
+        }
+
         this.firstName = name;
+        return true;
     }
 
     private setLastName(name: string) {

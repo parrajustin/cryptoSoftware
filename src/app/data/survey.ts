@@ -21,7 +21,11 @@ export class Survey {
     constructor(
     ) { }
 
-    public func() {
-        // testasdf
+    public takeSurvey(): Pdf {
+        if (!this.surveyExists()) {
+            return null;
+        }
+
+        return Survey.downloadFile();
     }
 }
