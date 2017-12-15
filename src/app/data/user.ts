@@ -23,8 +23,13 @@ export class User {
         return true;
     }
 
-    private setLastName(name: string) {
+    private setLastName(name: string): boolean {
+        if (name.length > 255 || name.length < 0) {
+            return false;
+        }
+
         this.lastName = name;
+        return true;
     }
 
     private getFirstName() {
