@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export class WorkshopManager {
 
     public publicVar: number = 0;
@@ -35,8 +37,15 @@ export class WorkshopUnit {
     constructor(
     ) { }
 
-    public func() {
-        // testasdf
+    public participateTempoaryWorkshop(userType, connectionType): null | ConnectionString {
+
+        // first check if the workshop is temporary or not
+        if (!this.isTemporaryWorkshop()) {
+            return null;
+        }
+
+        this.getVM().reserve();
+        return this.getVM().getConnection(connectionType);
     }
 }
 

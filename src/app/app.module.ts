@@ -22,6 +22,7 @@ import { PersistantComponent, WorkshopPListComponent } from './components/persis
 import { DialogComponent } from './components/dialog';
 import { WorkshopDialogComponent } from './components/workshopDetailed';
 import { MenuComponent } from './components/menu';
+import { StatComponent } from './components/stat';
 import { IAppState, INITIAL_STATE, LogStateActions, rootReducer } from './store';
 
 //guard
@@ -34,7 +35,7 @@ const appRoutes: Routes = [
   { path: 'groups', component: WorkshopGroupsComponent, canActivate: [AdminGuard] },
   { path: 'units', component: WorkshopUnitsComponent, canActivate: [AdminGuard] },
   { path: 'server', component: ServerComponent, canActivate: [AdminGuard] },
-  { path: 'stat', component: ServerComponent, canActivate: [AdminGuard] },
+  { path: 'stat', component: StatComponent, canActivate: [AdminGuard] },
   { path: 'users', component: UsersComponent, canActivate: [AdminGuard] },
   { path: 'temp', component: TemporaryComponent },
   { path: 'persistant', component: PersistantComponent },
@@ -68,7 +69,8 @@ const appRoutes: Routes = [
     DialogComponent,
     WorkshopPListComponent,
     WorkshopDialogComponent,
-    MenuComponent
+    MenuComponent,
+    StatComponent
   ],
   entryComponents: [
     AddGroupDialogComponent,
